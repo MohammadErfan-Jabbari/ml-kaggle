@@ -1,0 +1,42 @@
+# Baseline configuration for AMR prediction
+
+model:
+  type: "mlp"  # or "resnet", "transformer"
+  input_dim: 6000  # MALDI features
+  hidden_dims: [512, 256, 128]
+  output_dim: 8  # 8 antibiotics
+  dropout: 0.3
+  use_species: true  # Include species_id as input
+  num_species: 4
+
+training:
+  batch_size: 64
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 1.0e-05
+  early_stopping_patience: 10
+
+  # Semi-supervised settings
+  semi_supervised:
+    enabled: false  # Set to true for Phase 2
+    pseudo_label_threshold: 0.9
+    consistency_weight: 0.5
+
+data:
+  train_path: "raw/train.csv"
+  test_path: "raw/test.csv"
+  species_mapping_path: "raw/species_mapping.csv"
+
+  # Preprocessing
+  normalize: true
+  log_transform: false  # MALDI data is already processed
+
+experiment:
+  name: "baseline"
+  seed: 42
+  device: "cuda"  # or "cpu"
+
+logging:
+  mlflow_enabled: true
+  mlflow_tracking_uri: "mlruns"
+  log_interval: 10  # batches
