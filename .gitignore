@@ -24,6 +24,8 @@ checkpoints/
 
 # Data
 raw/*.zip
+raw/train.csv
+raw/test.csv
 data/
 
 # IDEs
