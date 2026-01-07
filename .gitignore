@@ -1,0 +1,41 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+
+# Virtual environments
+.venv
+.conda/
+
+# ML / Data Science
+mlruns/
+*.ipynb_checkpoints/
+outputs/
+models/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.h5
+
+# Data
+raw/*.zip
+data/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
