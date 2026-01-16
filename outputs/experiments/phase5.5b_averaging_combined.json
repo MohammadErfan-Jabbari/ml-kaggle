@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-08T15:17:08.234218",
+  "phase": "5.5b_averaging",
+  "baseline": {
+    "val_mean_auc": 0.803,
+    "val_K_pneumoniae_auc": 0.6595
+  },
+  "results": {
+    "5A1": {
+      "name": "5A1_Equal_Weights",
+      "val_mean_auc": 0.8140384118001731,
+      "val_K_pneumoniae_auc": 0.6958958580045218,
+      "val_per_species": {
+        "E.coli": 0.6517952594032502,
+        "K.pneumoniae": 0.6958958580045218,
+        "P.mirabilis": 0.6682798937462884,
+        "P.aeruginosa": 0.9558823529411764
+      }
+    },
+    "5A2": {
+      "name": "5A2_Weighted_By_KpN",
+      "val_mean_auc": 0.814155552824131,
+      "val_K_pneumoniae_auc": 0.6967171250903932,
+      "val_per_species": {
+        "E.coli": 0.6520019277624278,
+        "K.pneumoniae": 0.6967171250903932,
+        "P.mirabilis": 0.6683731326654221,
+        "P.aeruginosa": 0.9558823529411764
+      }
+    },
+    "5A3": {
+      "name": "5A3_Best_Single_PLS20",
+      "val_mean_auc": 0.7935,
+      "val_K_pneumoniae_auc": 0.6905
+    }
+  },
+  "best_method": "5A2"
+}

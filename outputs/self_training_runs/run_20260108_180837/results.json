@@ -1,0 +1,88 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/self_training_runs/run_20260108_180837",
+  "timestamp": "2026-01-08T18:23:12.770106",
+  "elapsed_time": "0:14:35",
+  "config": {
+    "data_dir": "/home/erfan/data/ml_kaggle/raw",
+    "output_base": "/sata_disk/users/erfan/ml_kaggle/outputs",
+    "val_fraction": 0.2,
+    "max_iterations": 5,
+    "confidence_threshold_high": 0.85,
+    "confidence_threshold_low": 0.15,
+    "pseudo_label_weight": 0.7,
+    "min_new_labels_per_iter": 10,
+    "lgb_params": {
+      "n_estimators": 300,
+      "learning_rate": 0.03,
+      "num_leaves": 31,
+      "min_child_samples": 20,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 0.1
+    },
+    "n_folds": 5,
+    "n_jobs": 32,
+    "random_state": 42,
+    "smoke_test": false
+  },
+  "mean_auc": 0.8179256712173901,
+  "per_antibiotic": {
+    "Ampicillin": {
+      "best_auc": 0.8853345631393593,
+      "initial_auc": 0.8757336910950864,
+      "auc_improvement": 0.009600872044272957,
+      "total_pseudo": 853,
+      "time": 123.14801096916199
+    },
+    "Amoxicillin_Clavulanic_acid": {
+      "best_auc": 0.7049078740808064,
+      "initial_auc": 0.6936296785920846,
+      "auc_improvement": 0.011278195488721776,
+      "total_pseudo": 2120,
+      "time": 121.92236495018005
+    },
+    "Cefotaxime": {
+      "best_auc": 0.7748066087288702,
+      "initial_auc": 0.7674052144016807,
+      "auc_improvement": 0.007401394327189448,
+      "total_pseudo": 878,
+      "time": 111.58004570007324
+    },
+    "Cefuroxime": {
+      "best_auc": 0.8881094683862849,
+      "initial_auc": 0.884083044982699,
+      "auc_improvement": 0.004026423403585944,
+      "total_pseudo": 855,
+      "time": 132.24801421165466
+    },
+    "Ciprofloxacin": {
+      "best_auc": 0.6863603988603989,
+      "initial_auc": 0.677457264957265,
+      "auc_improvement": 0.008903133903133909,
+      "total_pseudo": 634,
+      "time": 138.2492606639862
+    },
+    "Ertapenem": {
+      "best_auc": 0.9348072562358276,
+      "initial_auc": 0.9348072562358276,
+      "auc_improvement": 0.0,
+      "total_pseudo": 999,
+      "time": 68.88944911956787
+    },
+    "Imipenem": {
+      "best_auc": 0.9739619377162629,
+      "initial_auc": 0.9714532871972319,
+      "auc_improvement": 0.0025086505190310415,
+      "total_pseudo": 1105,
+      "time": 37.075594663619995
+    },
+    "Levofloxacin": {
+      "best_auc": 0.6951172625913109,
+      "initial_auc": 0.6926951172625914,
+      "auc_improvement": 0.0024221453287195382,
+      "total_pseudo": 694,
+      "time": 139.6122341156006
+    }
+  }
+}

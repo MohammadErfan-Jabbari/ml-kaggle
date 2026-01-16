@@ -1,0 +1,92 @@
+{
+  "LGBImportanceSelector": {
+    "hyperparameter": "k",
+    "values_tested": [
+      250.0,
+      500.0,
+      750.0,
+      1000.0,
+      1500.0
+    ],
+    "kpn_aucs": [
+      0.6987127535256733,
+      0.7050030876001278,
+      0.6969385987482081,
+      0.6976070882409546,
+      0.6961346435934714
+    ],
+    "kpn_stds": [
+      0.019729395773685446,
+      0.020440862267137667,
+      0.02959569489095328,
+      0.029212769286986264,
+      0.030434263103015904
+    ],
+    "optimal_value": 500.0,
+    "optimal_auc": 0.7050030876001278,
+    "optimal_std": 0.020440862267137667,
+    "improvement_over_baseline": "+0.0104",
+    "sensitivity_range": 0.008868444006656317,
+    "conclusion": "Very flat, method is insensitive to this hyperparameter"
+  },
+  "PLSRegression": {
+    "hyperparameter": "n_components",
+    "values_tested": [
+      5.0,
+      7.0,
+      10.0,
+      15.0,
+      20.0
+    ],
+    "kpn_aucs": [
+      0.6534451611587782,
+      0.70025325398134,
+      0.7131806087637754,
+      0.732939449871495,
+      0.7431301351147853
+    ],
+    "kpn_stds": [
+      0.03257670188652831,
+      0.020153905157071893,
+      0.02698015298362552,
+      0.029026325950642997,
+      0.031182059683912564
+    ],
+    "optimal_value": 20.0,
+    "optimal_auc": 0.7431301351147853,
+    "optimal_std": 0.031182059683912564,
+    "improvement_over_baseline": "+0.0485",
+    "sensitivity_range": 0.08968497395600716,
+    "conclusion": "Best at highest value, suggesting increasing performance"
+  },
+  "VarianceThreshold": {
+    "hyperparameter": "threshold",
+    "values_tested": [
+      0.001,
+      0.005,
+      0.01,
+      0.02,
+      0.05
+    ],
+    "kpn_aucs": [
+      0.6946426980559192,
+      0.7075889537875175,
+      0.6973019703202145,
+      0.6863806535144832,
+      0.6939224209478615
+    ],
+    "kpn_stds": [
+      0.031766292670558915,
+      0.028376974624558262,
+      0.03573005283730015,
+      0.0429388631424088,
+      0.028452525893480143
+    ],
+    "optimal_value": 0.005,
+    "optimal_auc": 0.7075889537875175,
+    "optimal_std": 0.028376974624558262,
+    "improvement_over_baseline": "+0.0130",
+    "sensitivity_range": 0.02120830027303433,
+    "conclusion": "Peak at threshold=0.005, plateau beyond"
+  }
+}

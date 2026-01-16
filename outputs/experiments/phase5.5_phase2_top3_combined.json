@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-01-08T13:01:14.243430",
+  "phase": "5.5_phase2_top3",
+  "baseline": {
+    "val_mean_auc": 0.803,
+    "val_K_pneumoniae_auc": 0.6595
+  },
+  "results": {
+    "pls_n20_val": {
+      "name": "pls_n20_val",
+      "display_name": "PLS(n=20)",
+      "oof_mean_auc": 0.8984058339664676,
+      "oof_K_pneumoniae_auc": 0.737278878893406,
+      "val_mean_auc": 0.7935182186913073,
+      "val_K_pneumoniae_auc": 0.6904681449639763,
+      "oof_val_gap": 0.10488761527516022,
+      "config": {
+        "name": "pls_n20_val",
+        "display_name": "PLS(n=20)",
+        "transformer": "PLSRegression(n_components=20)",
+        "use_scaler": true,
+        "oof_kpn_auc": 0.7431,
+        "phase": "2A"
+      }
+    },
+    "lgb_k500_val": {
+      "name": "lgb_k500_val",
+      "display_name": "LGBImportanceSelector(k=500)",
+      "oof_mean_auc": 0.9019740370894851,
+      "oof_K_pneumoniae_auc": 0.671717895373255,
+      "val_mean_auc": 0.800161221710415,
+      "val_K_pneumoniae_auc": 0.6804924203559284,
+      "oof_val_gap": 0.10181281537907005,
+      "config": {
+        "name": "lgb_k500_val",
+        "display_name": "LGBImportanceSelector(k=500)",
+        "transformer": "LGBImportanceSelector()",
+        "use_scaler": false,
+        "oof_kpn_auc": 0.705,
+        "phase": "1D3"
+      }
+    },
+    "var_t005_val": {
+      "name": "var_t005_val",
+      "display_name": "VarianceThreshold(t=0.005)",
+      "oof_mean_auc": 0.9015323242355187,
+      "oof_K_pneumoniae_auc": 0.6665510411409354,
+      "val_mean_auc": 0.801303643755545,
+      "val_K_pneumoniae_auc": 0.6531669607225564,
+      "oof_val_gap": 0.10022868047997369,
+      "config": {
+        "name": "var_t005_val",
+        "display_name": "VarianceThreshold(t=0.005)",
+        "transformer": "VarianceThreshold(threshold=0.005)",
+        "use_scaler": false,
+        "oof_kpn_auc": 0.7076,
+        "phase": "2C"
+      }
+    }
+  },
+  "best_method": "pls_n20_val"
+}

@@ -1,0 +1,43 @@
+{
+  "dr_method": "pca",
+  "n_components": 10,
+  "dr_params": {},
+  "max_iterations": 2,
+  "confidence_threshold_high": 0.85,
+  "confidence_threshold_low": 0.15,
+  "pseudo_label_weight": 0.5,
+  "min_new_labels_per_iter": 10,
+  "use_lgb": true,
+  "use_xgb": true,
+  "use_catboost": true,
+  "use_mlp": true,
+  "data_dir": "/home/erfan/data/ml_kaggle/raw",
+  "output_base": "/sata_disk/users/erfan/ml_kaggle/outputs",
+  "n_folds": 5,
+  "n_jobs": 32,
+  "random_state": 42,
+  "smoke_test": true,
+  "lgb_params": {
+    "n_estimators": 200,
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+    "min_child_samples": 15,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.1,
+    "reg_lambda": 0.1
+  },
+  "mlp_params": {
+    "hidden_layer_sizes": [
+      256,
+      128
+    ],
+    "activation": "relu",
+    "alpha": 0.01,
+    "learning_rate_init": 0.001,
+    "max_iter": 500,
+    "early_stopping": true,
+    "validation_fraction": 0.1,
+    "n_iter_no_change": 10
+  }
+}

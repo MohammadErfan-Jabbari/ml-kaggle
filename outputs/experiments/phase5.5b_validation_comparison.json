@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-01-08T13:20:32.529287",
+  "results": {
+    "Baseline": {
+      "val_K_pneumoniae_auc": 0.6595450540307546,
+      "val_mean_auc": 0.8030177211386637,
+      "val_per_species": {
+        "E.coli": {
+          "mean": 0.6493549149032376,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.6595450540307546,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.6860411143132215,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.9264705882352942,
+          "std": null,
+          "folds": []
+        }
+      }
+    },
+    "PLS20": {
+      "val_K_pneumoniae_auc": 0.6904681449639763,
+      "val_mean_auc": 0.7935182186913073,
+      "val_per_species": {
+        "E.coli": {
+          "mean": 0.618453752687822,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.6904681449639763,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.5874117415988358,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.9044117647058822,
+          "std": null,
+          "folds": []
+        }
+      }
+    },
+    "Ensemble": {
+      "val_K_pneumoniae_auc": 0.6967222457327266,
+      "val_mean_auc": 0.8141567826549063,
+      "val_per_species": {
+        "Ampicillin": 0.884707635009311,
+        "Levofloxacin": 0.7065199335548173,
+        "Ciprofloxacin": 0.7088154269972452,
+        "Imipenem": 0.967316867808027,
+        "Amoxicillin_Clavulanic_acid": 0.7247844827586207,
+        "Ertapenem": 0.8800942979224989,
+        "Cefotaxime": 0.7664789233414359,
+        "Cefuroxime": 0.8745366938472944,
+        "mean_auc": 0.8141567826549063,
+        "E.coli_auc": 0.6520019277624278,
+        "K.pneumoniae_auc": 0.6967222457327266,
+        "P.mirabilis_auc": 0.6683731326654221,
+        "P.aeruginosa_auc": 0.9558823529411764
+      },
+      "weights": [
+        0.34111889497099407,
+        0.3361904878031155,
+        0.32269061722589043
+      ]
+    }
+  },
+  "winner": "Ensemble",
+  "ensemble_weights": [
+    0.34111889497099407,
+    0.3361904878031155,
+    0.32269061722589043
+  ],
+  "improvement_vs_baseline": {
+    "pls20_kp_percent": 4.688548681282328,
+    "ensemble_kp_percent": 5.636793343345792
+  }
+}

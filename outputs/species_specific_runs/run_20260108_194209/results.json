@@ -1,0 +1,20 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/species_specific_runs/run_20260108_194209",
+  "timestamp": "2026-01-08T19:59:20.899990",
+  "elapsed_seconds": 1031.437108039856,
+  "elapsed_formatted": "0:17:11",
+  "mean_auc": 0.8023165828476058,
+  "per_antibiotic_auc": {
+    "Ampicillin": 0.8714915887850467,
+    "Amoxicillin_Clavulanic_acid": 0.6811586837758862,
+    "Cefotaxime": 0.7439400458978772,
+    "Cefuroxime": 0.8678469541869441,
+    "Ciprofloxacin": 0.7205458560690836,
+    "Ertapenem": 0.8723244348244348,
+    "Imipenem": 0.9654024811646745,
+    "Levofloxacin": 0.6958226180768989
+  },
+  "per_model_results": {
+    "GLOBAL_AMP": {
+      "val_auc": 0.8722392523364485,
+      "n_samples": 

@@ -1,0 +1,429 @@
+{
+  "phase": 5,
+  "timestamp": "2026-01-08T11:40:16.265343",
+  "n_experiments": 5,
+  "results": {
+    "5A1": {
+      "name": "5A1_equal_weights",
+      "timestamp": "2026-01-08T11:40:16.028615",
+      "mean_auc": 0.9062193527738216,
+      "mean_auc_std": 0.0,
+      "per_antibiotic": {
+        "Ampicillin": {
+          "mean": 0.9322547539159551,
+          "std": null,
+          "folds": []
+        },
+        "Levofloxacin": {
+          "mean": 0.8551046691875279,
+          "std": null,
+          "folds": []
+        },
+        "Ciprofloxacin": {
+          "mean": 0.8500803510480499,
+          "std": null,
+          "folds": []
+        },
+        "Imipenem": {
+          "mean": 0.9911432202720314,
+          "std": null,
+          "folds": []
+        },
+        "Amoxicillin_Clavulanic_acid": {
+          "mean": 0.7417158731184185,
+          "std": null,
+          "folds": []
+        },
+        "Ertapenem": {
+          "mean": 0.988076676601582,
+          "std": null,
+          "folds": []
+        },
+        "Cefotaxime": {
+          "mean": 0.9404362748737883,
+          "std": null,
+          "folds": []
+        },
+        "Cefuroxime": {
+          "mean": 0.950943003173219,
+          "std": null,
+          "folds": []
+        }
+      },
+      "per_species": {
+        "E.coli": {
+          "mean": 0.6876412030090189,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.7492069800698173,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.6141543573104671,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.6137391723755714,
+          "std": null,
+          "folds": []
+        }
+      },
+      "config": {
+        "ensemble_type": "averaging",
+        "weighting": "equal",
+        "base_models": [
+          "pls_n20",
+          "var_t005",
+          "lgb_k500"
+        ],
+        "weights": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "K.pneumoniae_auc": 0.7492069800698173,
+      "K.pneumoniae_auc_std": null
+    },
+    "5A2": {
+      "name": "5A2_weighted_by_kpn",
+      "timestamp": "2026-01-08T11:40:16.068477",
+      "mean_auc": 0.9062140277949983,
+      "mean_auc_std": 0.0,
+      "per_antibiotic": {
+        "Ampicillin": {
+          "mean": 0.9323350944908826,
+          "std": null,
+          "folds": []
+        },
+        "Levofloxacin": {
+          "mean": 0.855030871435325,
+          "std": null,
+          "folds": []
+        },
+        "Ciprofloxacin": {
+          "mean": 0.8498127016507669,
+          "std": null,
+          "folds": []
+        },
+        "Imipenem": {
+          "mean": 0.9911577936516824,
+          "std": null,
+          "folds": []
+        },
+        "Amoxicillin_Clavulanic_acid": {
+          "mean": 0.7418825505523613,
+          "std": null,
+          "folds": []
+        },
+        "Ertapenem": {
+          "mean": 0.9880695522448669,
+          "std": null,
+          "folds": []
+        },
+        "Cefotaxime": {
+          "mean": 0.94042978676469,
+          "std": null,
+          "folds": []
+        },
+        "Cefuroxime": {
+          "mean": 0.9509938715694111,
+          "std": null,
+          "folds": []
+        }
+      },
+      "per_species": {
+        "E.coli": {
+          "mean": 0.687286110280177,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.7499173494301132,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.6144568659082621,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.6134804713081672,
+          "std": null,
+          "folds": []
+        }
+      },
+      "config": {
+        "ensemble_type": "averaging",
+        "weighting": "kpn_auc",
+        "base_models": [
+          "pls_n20",
+          "var_t005",
+          "lgb_k500"
+        ],
+        "kpn_aucs": [
+          0.7431,
+          0.7076,
+          0.705
+        ],
+        "weights": [
+          0.3447140140093705,
+          0.3282460453680939,
+          0.3270399406225356
+        ]
+      },
+      "K.pneumoniae_auc": 0.7499173494301132,
+      "K.pneumoniae_auc_std": null
+    },
+    "5A3": {
+      "name": "5A3_best_single",
+      "timestamp": "2026-01-08T11:40:16.107375",
+      "mean_auc": 0.8871106577759299,
+      "mean_auc_std": 0.0,
+      "per_antibiotic": {
+        "Ampicillin": {
+          "mean": 0.9241343087082272,
+          "std": null,
+          "folds": []
+        },
+        "Levofloxacin": {
+          "mean": 0.8145012957686542,
+          "std": null,
+          "folds": []
+        },
+        "Ciprofloxacin": {
+          "mean": 0.7948085013545534,
+          "std": null,
+          "folds": []
+        },
+        "Imipenem": {
+          "mean": 0.9911142652677246,
+          "std": null,
+          "folds": []
+        },
+        "Amoxicillin_Clavulanic_acid": {
+          "mean": 0.713177853866529,
+          "std": null,
+          "folds": []
+        },
+        "Ertapenem": {
+          "mean": 0.9842295239754197,
+          "std": null,
+          "folds": []
+        },
+        "Cefotaxime": {
+          "mean": 0.9312184740976663,
+          "std": null,
+          "folds": []
+        },
+        "Cefuroxime": {
+          "mean": 0.943701039168665,
+          "std": null,
+          "folds": []
+        }
+      },
+      "per_species": {
+        "E.coli": {
+          "mean": 0.60654828420032,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.7533181503113568,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.6147741999236241,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.5572739127434795,
+          "std": null,
+          "folds": []
+        }
+      },
+      "config": {
+        "ensemble_type": "single",
+        "base_model": "pls_n20",
+        "kpn_auc": 0.7431
+      },
+      "K.pneumoniae_auc": 0.7533181503113568,
+      "K.pneumoniae_auc_std": null
+    },
+    "5B1": {
+      "name": "5B1_lr_stacking",
+      "timestamp": "2026-01-08T11:40:16.148483",
+      "mean_auc": 0.9068285939748149,
+      "mean_auc_std": 0.0,
+      "per_antibiotic": {
+        "Ampicillin": {
+          "mean": 0.9331108561713655,
+          "std": null,
+          "folds": []
+        },
+        "Levofloxacin": {
+          "mean": 0.8553856250969298,
+          "std": null,
+          "folds": []
+        },
+        "Ciprofloxacin": {
+          "mean": 0.8517109881323357,
+          "std": null,
+          "folds": []
+        },
+        "Imipenem": {
+          "mean": 0.9913418784472754,
+          "std": null,
+          "folds": []
+        },
+        "Amoxicillin_Clavulanic_acid": {
+          "mean": 0.7434743846501713,
+          "std": null,
+          "folds": []
+        },
+        "Ertapenem": {
+          "mean": 0.9875936452162971,
+          "std": null,
+          "folds": []
+        },
+        "Cefotaxime": {
+          "mean": 0.9403915790111111,
+          "std": null,
+          "folds": []
+        },
+        "Cefuroxime": {
+          "mean": 0.9516197950730324,
+          "std": null,
+          "folds": []
+        }
+      },
+      "per_species": {
+        "E.coli": {
+          "mean": 0.7233480813573382,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.7467778447676772,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.6490176397054334,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.643936102476896,
+          "std": null,
+          "folds": []
+        }
+      },
+      "config": {
+        "ensemble_type": "stacking",
+        "meta_learner": "LogisticRegression",
+        "base_models": [
+          "baseline",
+          "pls_n20",
+          "var_t005",
+          "lgb_k500",
+          "pls_n15"
+        ],
+        "n_base_models": 5
+      },
+      "K.pneumoniae_auc": 0.7467778447676772,
+      "K.pneumoniae_auc_std": null
+    },
+    "5B2": {
+      "name": "5B2_lgb_stacking",
+      "timestamp": "2026-01-08T11:40:16.187420",
+      "mean_auc": 0.9544642154800578,
+      "mean_auc_std": 0.0,
+      "per_antibiotic": {
+        "Ampicillin": {
+          "mean": 0.9783365527155113,
+          "std": null,
+          "folds": []
+        },
+        "Levofloxacin": {
+          "mean": 0.9111469444359117,
+          "std": null,
+          "folds": []
+        },
+        "Ciprofloxacin": {
+          "mean": 0.909223370665551,
+          "std": null,
+          "folds": []
+        },
+        "Imipenem": {
+          "mean": 0.9993860005046993,
+          "std": null,
+          "folds": []
+        },
+        "Amoxicillin_Clavulanic_acid": {
+          "mean": 0.8874584921506558,
+          "std": null,
+          "folds": []
+        },
+        "Ertapenem": {
+          "mean": 0.998686981057404,
+          "std": null,
+          "folds": []
+        },
+        "Cefotaxime": {
+          "mean": 0.97434872000421,
+          "std": null,
+          "folds": []
+        },
+        "Cefuroxime": {
+          "mean": 0.9771266623065185,
+          "std": null,
+          "folds": []
+        }
+      },
+      "per_species": {
+        "E.coli": {
+          "mean": 0.8970417610594947,
+          "std": null,
+          "folds": []
+        },
+        "K.pneumoniae": {
+          "mean": 0.9237485912423021,
+          "std": null,
+          "folds": []
+        },
+        "P.mirabilis": {
+          "mean": 0.9124895463291456,
+          "std": null,
+          "folds": []
+        },
+        "P.aeruginosa": {
+          "mean": 0.9509735252475578,
+          "std": null,
+          "folds": []
+        }
+      },
+      "config": {
+        "ensemble_type": "stacking",
+        "meta_learner": "LightGBM",
+        "base_models": [
+          "baseline",
+          "pls_n20",
+          "var_t005",
+          "lgb_k500",
+          "pls_n15"
+        ],
+        "n_base_models": 5
+      },
+      "K.pneumoniae_auc": 0.9237485912423021,
+      "K.pneumoniae_auc_std": null
+    }
+  }
+}

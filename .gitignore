@@ -14,7 +14,6 @@ wheels/
 # ML / Data Science
 mlruns/
 *.ipynb_checkpoints/
-outputs/
 models/
 checkpoints/
 *.pth
@@ -41,3 +40,5 @@ Thumbs.db
 # Logs
 *.log
 logs/
+# Exclude large model runs but preserve submissions
+outputs/*/runs/

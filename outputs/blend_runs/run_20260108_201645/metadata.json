@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-08T20:16:45.426070",
+  "components": {
+    "st_original": {
+      "mean_auc": 0.8179256712173901,
+      "desc": "Self-Train (0.85/0.15)"
+    },
+    "st_aggressive": {
+      "mean_auc": 0.8162199248881115,
+      "desc": "Self-Train (0.70/0.30)"
+    },
+    "miracle_v2": {
+      "mean_auc": 0.8146653718626123,
+      "desc": "Miracle v2 (17 models)"
+    },
+    "species_specific": {
+      "mean_auc": 0.8023,
+      "desc": "Species-Specific (32 models)"
+    }
+  },
+  "blends": {
+    "st_heavy": {
+      "est_auc": 0.8169475814109568,
+      "components": [
+        "st_original",
+        "miracle_v2"
+      ]
+    },
+    "best2_avg": {
+      "est_auc": 0.8162955215400012,
+      "components": [
+        "st_original",
+        "miracle_v2"
+      ]
+    },
+    "best2_rank": {
+      "est_auc": 0.8162955215400012,
+      "components": [
+        "st_original",
+        "miracle_v2"
+      ]
+    },
+    "weighted_good": {
+      "est_auc": 0.8162724945614703,
+      "components": [
+        "st_original",
+        "st_aggressive",
+        "miracle_v2"
+      ]
+    },
+    "all_good": {
+      "est_auc": 0.8162703226560379,
+      "components": [
+        "st_original",
+        "st_aggressive",
+        "miracle_v2"
+      ]
+    },
+    "weighted_all": {
+      "est_auc": 0.8128244017411645,
+      "components": [
+        "st_original",
+        "st_aggressive",
+        "miracle_v2",
+        "species_specific"
+      ]
+    },
+    "rank_all": {
+      "est_auc": 0.8127777419920286,
+      "components": [
+        "st_original",
+        "st_aggressive",
+        "miracle_v2",
+        "species_specific"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-01-08T12:18:45.553320",
+  "phase": 5.5,
+  "analysis": {
+    "overall_oof_auc": 0.9015323242355187,
+    "overall_val_auc": 0.8030177211386637,
+    "overall_gap": 0.098514603096855,
+    "mean_ab_gap": 0.10404789984396295,
+    "max_ab_gap": 0.19445996592853398,
+    "mean_species_gap": 0.023339847800849578,
+    "max_species_gap": 0.051020692402631074,
+    "per_antibiotic_gaps": {
+      "Ampicillin": 0.06546290089308393,
+      "Levofloxacin": 0.1602082835814801,
+      "Ciprofloxacin": 0.15206491785898535,
+      "Imipenem": 0.026113795688663677,
+      "Amoxicillin_Clavulanic_acid": -0.022133186988431253,
+      "Ertapenem": 0.1275916507466086,
+      "Cefotaxime": 0.19445996592853398,
+      "Cefuroxime": 0.08434849706591674
+    },
+    "per_species_gaps": {
+      "E.coli": 0.019370362176557965,
+      "K.pneumoniae": 0.007005987110180856,
+      "P.mirabilis": -0.015962349514028418,
+      "P.aeruginosa": -0.051020692402631074
+    },
+    "decision": "use_val_only",
+    "reasoning": "OOF-Val gap is large (+0.0985). OOF is misleading - use Val as the primary metric."
+  }
+}

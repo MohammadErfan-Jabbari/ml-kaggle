@@ -1,0 +1,218 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/self_training_runs/run_20260108_173807",
+  "timestamp": "2026-01-08T17:47:24.154249",
+  "config": {
+    "data_dir": "/home/erfan/data/ml_kaggle/raw",
+    "output_base": "/sata_disk/users/erfan/ml_kaggle/outputs",
+    "val_fraction": 0.2,
+    "max_iterations": 3,
+    "confidence_threshold_high": 0.9,
+    "confidence_threshold_low": 0.1,
+    "pseudo_label_weight": 0.5,
+    "min_new_labels_per_iter": 10,
+    "lgb_params": {
+      "n_estimators": 300,
+      "learning_rate": 0.03,
+      "num_leaves": 31,
+      "min_child_samples": 20,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 0.1
+    },
+    "n_folds": 5,
+    "n_jobs": 32,
+    "random_state": 42,
+    "smoke_test": false
+  },
+  "mean_auc": 0.8181514988923754,
+  "per_antibiotic_auc": {
+    "Ampicillin": 0.8834479288948516,
+    "Amoxicillin_Clavulanic_acid": 0.7042468809386102,
+    "Cefotaxime": 0.7674052144016807,
+    "Cefuroxime": 0.8883925762818496,
+    "Ciprofloxacin": 0.6912393162393162,
+    "Ertapenem": 0.9348072562358276,
+    "Imipenem": 0.9762110726643599,
+    "Levofloxacin": 0.6994617454825067
+  },
+  "iteration_metrics": {
+    "Ampicillin": [
+      {
+        "iteration": 1,
+        "val_auc": 0.8757336910950864,
+        "n_labeled": 2975,
+        "n_pseudo": "662",
+        "n_new": "662"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.882902901224216,
+        "n_labeled": 3637,
+        "n_pseudo": "704",
+        "n_new": "42"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.8800519872547374,
+        "n_labeled": 3679,
+        "n_pseudo": "733",
+        "n_new": "29"
+      }
+    ],
+    "Amoxicillin_Clavulanic_acid": [
+      {
+        "iteration": 1,
+        "val_auc": 0.6936296785920846,
+        "n_labeled": 1564,
+        "n_pseudo": "1125",
+        "n_new": "1125"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.6963562753036437,
+        "n_labeled": 2689,
+        "n_pseudo": "1710",
+        "n_new": "585"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.7028009584400562,
+        "n_labeled": 3274,
+        "n_pseudo": "1879",
+        "n_new": "169"
+      }
+    ],
+    "Cefotaxime": [
+      {
+        "iteration": 1,
+        "val_auc": 0.7674052144016807,
+        "n_labeled": 3000,
+        "n_pseudo": "630",
+        "n_new": "630"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.7624868684939357,
+        "n_labeled": 3630,
+        "n_pseudo": "718",
+        "n_new": "88"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.7656384299493839,
+        "n_labeled": 3718,
+        "n_pseudo": "755",
+        "n_new": "37"
+      }
+    ],
+    "Cefuroxime": [
+      {
+        "iteration": 1,
+        "val_auc": 0.884083044982699,
+        "n_labeled": 2970,
+        "n_pseudo": "627",
+        "n_new": "627"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.8878892733564014,
+        "n_labeled": 3597,
+        "n_pseudo": "708",
+        "n_new": "81"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.885121107266436,
+        "n_labeled": 3678,
+        "n_pseudo": "732",
+        "n_new": "24"
+      }
+    ],
+    "Ciprofloxacin": [
+      {
+        "iteration": 1,
+        "val_auc": 0.677457264957265,
+        "n_labeled": 2917,
+        "n_pseudo": "286",
+        "n_new": "286"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.6804487179487179,
+        "n_labeled": 3203,
+        "n_pseudo": "365",
+        "n_new": "79"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.6912393162393162,
+        "n_labeled": 3282,
+        "n_pseudo": "394",
+        "n_new": "29"
+      }
+    ],
+    "Ertapenem": [
+      {
+        "iteration": 1,
+        "val_auc": 0.9348072562358276,
+        "n_labeled": 3003,
+        "n_pseudo": "971",
+        "n_new": "971"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.9316893424036282,
+        "n_labeled": 3974,
+        "n_pseudo": "993",
+        "n_new": "22"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.9302721088435374,
+        "n_labeled": 3996,
+        "n_pseudo": "994",
+        "n_new": "1"
+      }
+    ],
+    "Imipenem": [
+      {
+        "iteration": 1,
+        "val_auc": 0.9714532871972319,
+        "n_labeled": 2892,
+        "n_pseudo": "1095",
+        "n_new": "1095"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.9762110726643599,
+        "n_labeled": 3987,
+        "n_pseudo": "1099",
+        "n_new": "4"
+      }
+    ],
+    "Levofloxacin": [
+      {
+        "iteration": 1,
+        "val_auc": 0.6926951172625914,
+        "n_labeled": 2914,
+        "n_pseudo": "371",
+        "n_new": "371"
+      },
+      {
+        "iteration": 2,
+        "val_auc": 0.6974625144175316,
+        "n_labeled": 3285,
+        "n_pseudo": "448",
+        "n_new": "77"
+      },
+      {
+        "iteration": 3,
+        "val_auc": 0.6994617454825067,
+        "n_labeled": 3362,
+        "n_pseudo": "485",
+        "n_new": "37"
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/transductive_dr_runs/pca_200_20260108_212252",
+  "dr_method": "pca",
+  "n_components": 200,
+  "timestamp": "2026-01-08T21:38:05.462160",
+  "elapsed_time": "0:15:13",
+  "val_mean_auc": 0.7901303486881959,
+  "per_antibiotic": {
+    "Ampicillin": 0.8847001862197392,
+    "Levofloxacin": 0.6836638289036545,
+    "Ciprofloxacin": 0.6796979535615899,
+    "Imipenem": 0.9557465618860511,
+    "Amoxicillin_Clavulanic_acid": 0.6895664300202841,
+    "Ertapenem": 0.849609547664653,
+    "Cefotaxime": 0.7253572063793206,
+    "Cefuroxime": 0.8527010748702742
+  },
+  "antibiotic_results": {
+    "Ampicillin": {
+      "best_auc": 0.8847001862197392,
+      "initial_auc": 0.8847001862197392,
+      "auc_improvement": 0.0,
+      "total_pseudo": 258,
+      "time": 72.1425313949585
+    },
+    "Levofloxacin": {
+      "best_auc": 0.6836638289036545,
+      "initial_auc": 0.6806374584717608,
+      "auc_improvement": 0.003026370431893688,
+      "total_pseudo": 272,
+      "time": 112.80408191680908
+    },
+    "Ciprofloxacin": {
+      "best_auc": 0.6796979535615899,
+      "initial_auc": 0.6796979535615899,
+      "auc_improvement": 0.0,
+      "total_pseudo": 276,
+      "time": 69.14734125137329
+    },
+    "Imipenem": {
+      "best_auc": 0.9557465618860511,
+      "initial_auc": 0.9557465618860511,
+      "auc_improvement": 0.0,
+      "total_pseudo": 294,
+      "time": 87.49870419502258
+    },
+    "Amoxicillin_Clavulanic_acid": {
+      "best_auc": 0.6895664300202841,
+      "initial_auc": 0.6868471095334686,
+      "auc_improvement": 0.0027193204868154464,
+      "total_pseudo": 264,
+      "time": 222.87211990356445
+    },
+    "Ertapenem": {
+      "best_auc": 0.849609547664653,
+      "initial_auc": 0.849609547664653,
+      "auc_improvement": 0.0,
+      "total_pseudo": 292,
+      "time": 138.06686973571777
+    },
+    "Cefotaxime": {
+      "best_auc": 0.7253572063793206,
+      "initial_auc": 0.7253572063793206,
+      "auc_improvement": 0.0,
+      "total_pseudo": 269,
+      "time": 132.41022634506226
+    },
+    "Cefuroxime": {
+      "best_auc": 0.8527010748702742,
+      "initial_auc": 0.8527010748702742,
+      "auc_improvement": 0.0,
+      "total_pseudo": 300,
+      "time": 73.78386425971985
+    }
+  }
+}

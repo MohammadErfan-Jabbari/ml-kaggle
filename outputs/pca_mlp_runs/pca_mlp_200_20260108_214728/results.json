@@ -1,0 +1,38 @@
+{
+  "mean_auc": 0.7754214952915821,
+  "n_components": 200,
+  "per_antibiotic": {
+    "Ampicillin": {
+      "best_auc": 0.8699962756052142,
+      "n_pseudo": 710
+    },
+    "Levofloxacin": {
+      "best_auc": 0.6767545681063124,
+      "n_pseudo": 541
+    },
+    "Ciprofloxacin": {
+      "best_auc": 0.6595828414010232,
+      "n_pseudo": 469
+    },
+    "Imipenem": {
+      "best_auc": 0.9572972214426045,
+      "n_pseudo": 979
+    },
+    "Amoxicillin_Clavulanic_acid": {
+      "best_auc": 0.670765720081136,
+      "n_pseudo": 557
+    },
+    "Ertapenem": {
+      "best_auc": 0.821983203182555,
+      "n_pseudo": 964
+    },
+    "Cefotaxime": {
+      "best_auc": 0.6947589968577697,
+      "n_pseudo": 768
+    },
+    "Cefuroxime": {
+      "best_auc": 0.8522331356560415,
+      "n_pseudo": 666
+    }
+  }
+}

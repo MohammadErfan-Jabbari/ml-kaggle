@@ -1,204 +1,107 @@
-# AMR Prediction from MALDI-TOF
+# AMR Prediction from MALDI-TOF - Competition Guide
 
-## Quick Start
+## ⚠️ START HERE - Read `knowledge/sessions/2026-01-08-session-handoff.md`
 
+## Quick Commands
 ```bash
-# Setup
-uv sync
-
-# Train model
-uv run python src/training/train.py
-
-# Generate submission
-uv run python src/inference/predict.py --checkpoint outputs/models/best.pt
-
-# Submit to Kaggle
-kaggle competitions submit -c antimicrobial-resistance-prediction-from-maldi-tof \
-  -f outputs/submissions/submission.csv -m "Description"
+uv sync                                    # Setup
+uv run python experiments/run_mega_blend.py   # Original best (LB=0.83862)
+uv run python experiments/run_self_training.py  # Self-training (LB=0.82445)
 ```
 
----
-
-## Session Protocol
-
-**At session start**, read these files in order:
-1. `knowledge/SESSION_STATE.md` - Current state and next actions (contains link to strategy)
-2. `knowledge/EDA_CONCLUSIONS_STRATEGY.md` - ⭐ MANDATORY: All modeling decisions must follow this
-3. `knowledge/COURSE_METHODS_REFERENCE.md` - Methods/techniques from course (semi-supervised, feature engineering, etc.)
-4. `knowledge/hypotheses/hypothesis_tracker.md` - Active hypotheses
-
-**NOTE**: The EDA Conclusions document contains 5 Critical Truths that override any default approaches. Read it before coding anything.
-
-**During session**:
-- Update `hypothesis_tracker.md` as experiments complete
-- Log significant findings in `knowledge/insights/`
-- Track experiments in `knowledge/experiments/experiment_log.md`
-
-**At session end**:
-- Update `SESSION_STATE.md` with current state
-- Create session log in `knowledge/sessions/YYYY-MM-DD.md`
-- Update decision tree if new branch explored
-
----
-
-## Project Overview
-
-| Aspect | Value |
+## Competition Status
+| Metric | Value |
 |--------|-------|
-| **Task** | Multi-label classification (8 antibiotics) |
-| **Data** | 3360 train / 1000 test samples, 6000 MALDI features |
-| **Metric** | Mean AUC across 8 antibiotics |
-| **Challenge** | Semi-supervised (missing labels), species distribution shift |
+| **Best LB** | 0.83862 (mega-blend from Session 5) |
+| **Our New Best** | 0.82445 (self-training) |
+| **Gap to Beat** | +0.014 needed |
+| **Primary Metric** | **Val Mean AUC** (avg across 8 antibiotics) |
 
-**Critical Insight**: P. aeruginosa is 43% of train but only 3% of test. Don't overfit to it.
+## Critical Rules (NON-NEGOTIABLE)
 
----
+### 1. Use Val Mean AUC, NOT K.pn AUC
+- Leaderboard = mean AUC across 8 antibiotics
+- Optimizing K.pn alone HURTS LB (proven: +5.6% K.pn → -1.6% LB)
 
-## Tech Stack
-
-| Tool | Purpose | Command |
-|------|---------|---------|
-| uv | Package manager | `uv sync`, `uv add <pkg>` |
-| PyTorch | Deep learning | - |
-| scikit-learn | Traditional ML | - |
-| LightGBM | Gradient boosting | `uv add lightgbm` |
-| MLflow | Experiment tracking | `uv run mlflow ui` |
-| Kaggle CLI | Submissions | `kaggle competitions submit ...` |
-
----
-
-## Directory Structure
-
-```
-ml_kaggle/
-├── CLAUDE.md              # This file - how to work here
-├── knowledge/             # Accumulated knowledge (READ FIRST)
-│   ├── SESSION_STATE.md   # Current state - START HERE
-│   ├── APPROACH_PLAN.md   # Phased competition strategy
-│   ├── COURSE_METHODS_REFERENCE.md  # Methods from course notebooks
-│   ├── Ml-course_notebooks/  # Professor's Jupyter notebooks
-│   ├── research/          # Domain knowledge
-│   ├── insights/          # Data analysis findings
-│   ├── experiments/       # Experiment logs and results
-│   ├── hypotheses/        # Hypothesis tracking
-│   └── sessions/          # Session logs
-├── raw/                   # Competition data
-├── src/                   # Source code
-│   ├── data/dataset.py    # Data loading, MaldiDataset
-│   ├── models/            # Model architectures
-│   ├── training/train.py  # Training loop
-│   ├── inference/predict.py # Submission generation
-│   └── utils/metrics.py   # Evaluation metrics
-├── configs/               # Hyperparameter configs
-├── scripts/               # Utility scripts (EDA, etc.)
-└── outputs/               # Models, submissions (gitignored)
+### 2. Use Validation Split (matches test distribution)
+```python
+from src.data.dataset import load_validation_split
+X_train, X_val, y_train, y_val, species_train, species_val = load_validation_split()
+# Train: 2688, Val: 672 (matches test species distribution)
 ```
 
----
+### 3. Species Shift is Critical
+| Species | Train | Test | Action |
+|---------|-------|------|--------|
+| P. aeruginosa | 43% | 3% | Downweight 0.1x |
+| K. pneumoniae | 28% | 51% | Upweight 2.0x |
+| E. coli | 17% | 27% | Upweight 1.5x |
+| P. mirabilis | 12% | 19% | Upweight 1.5x |
 
-## Data Quick Reference
+### 4. Intrinsic Resistance Rules (free predictions)
+- P. aeruginosa → 1.0 for: Ampicillin, Amox/Clav, Ertapenem, Cefotaxime, Cefuroxime
+- P. mirabilis → 1.0 for: Imipenem
 
-| File | Samples | Description |
-|------|---------|-------------|
-| `raw/train.csv` | 3360 | Features + labels (some NaN) |
-| `raw/test.csv` | 1000 | Features only |
+### 5. NO Stacking (overfits massively)
+- OOF=0.9545 → LB=0.8269 (12.8% gap!)
+- Use simple averaging or rank averaging only
 
-**Targets**: `Ampicillin`, `Levofloxacin`, `Ciprofloxacin`, `Imipenem`, `Amoxicillin_Clavulanic_acid`, `Ertapenem`, `Cefotaxime`, `Cefuroxime`
+## Miracle Blend Script
+Location: `experiments/run_miracle_v2.py`
 
-**Species**: 0=E.coli, 1=K.pneumoniae, 2=P.mirabilis, 3=P.aeruginosa
+**What it does:**
+1. Loads data with proper validation split
+2. Builds 17 diverse models (LightGBM, XGBoost, CatBoost, MLP, PLS+LGB)
+3. Creates 4 ensemble variants (rank-avg, weighted-avg, top-N, meta-blend)
+4. Evaluates with **Val Mean AUC** (the LB metric)
+5. Saves submissions to `outputs/submissions/`
 
----
+**Run time:** ~30-40 minutes
 
-## Code Modules
+## Data
+| File | Samples | Notes |
+|------|---------|-------|
+| train.csv | 3360 | 6000 MALDI features, 8 antibiotic labels (some NaN) |
+| test.csv | 1000 | Species shift: 51% K.pn (vs 28% train) |
 
-| Module | Key Functions |
-|--------|---------------|
-| `src/data/dataset.py` | `load_train_data()`, `MaldiDataset`, `get_dataloaders()` |
-| `src/models/baseline.py` | `MLPBaseline`, `create_model(config)` |
-| `src/training/train.py` | Training loop with early stopping |
-| `src/inference/predict.py` | Generate Kaggle submissions |
-| `src/utils/metrics.py` | `mean_auc()` - handles NaN labels |
+## Key Files
+| File | Purpose |
+|------|---------|
+| `experiments/run_miracle_v2.py` | **MAIN: Ultimate ensemble** |
+| `experiments/run_mega_blend.py` | Previous best (LB=0.83862) |
+| `src/data/dataset.py` | Data loading + validation split |
+| `knowledge/SESSION_STATE.md` | Current state (condensed) |
 
----
-
-## Verification Commands
-
+## Submission
 ```bash
-# Verify training works
-uv run python src/training/train.py
-
-# Verify submission format
-uv run python -c "
-import pandas as pd
-sub = pd.read_csv('outputs/submissions/submission.csv')
-sample = pd.read_csv('raw/sample_submission.csv')
-print('Shape match:', sub.shape == sample.shape)
-print('Columns match:', list(sub.columns) == list(sample.columns))
-"
-
-# Quick data check
-uv run python -c "
-import pandas as pd
-train = pd.read_csv('raw/train.csv')
-print(f'Train: {train.shape}')
-print(f'Missing labels: {train.iloc[:, -8:].isna().sum().to_dict()}')
-"
+kaggle competitions submit -c antimicrobial-resistance-prediction-from-maldi-tof \
+  -f outputs/submissions/sub_miracle_v2_xxx.csv \
+  -m "Miracle v2 ensemble"
 ```
 
----
+## What's Been Tried
+| Approach | Val Mean AUC | LB | Verdict |
+|----------|--------------|-----|---------|
+| Baseline LightGBM | 0.80 | 0.8324 | OK |
+| + Intrinsic rules | 0.80 | 0.8328 | Minimal |
+| **Mega-blend rank-avg** | ~0.90 OOF | **0.83862** | **BEST LB** |
+| Stacking | 0.95 OOF | 0.8269 | OVERFIT |
+| Self-Training (0.85/0.15) | 0.8179 | 0.82445 | Best new approach |
+| Self-Training Aggressive | 0.8162 | - | Worse |
+| Miracle v2 (17 models) | 0.8147 | - | Not submitted |
+| Species-Specific (32) | 0.8023 | - | Failed |
+| **Transductive PCA 100** | 0.7758 | - | **FAILED - PCA hurts** |
+| **Transductive PCA 200** | 0.7901 | - | **FAILED - PCA hurts** |
+| **PCA 200 + MLP only** | 0.7754 | - | **FAILED - PCA hurts** |
 
-## Knowledge System Guide
+## Next Steps to Try
+1. **Re-run mega-blend** - the original that got 0.83862
+2. **Blend mega-blend + self-training** predictions
+3. **Per-antibiotic threshold tuning** for self-training
 
-The `knowledge/` folder preserves context across sessions. Use it as follows:
-
-### When Starting a New Task
-1. Check `SESSION_STATE.md` for current priorities
-2. Read `EDA_CONCLUSIONS_STRATEGY.md` for mandatory constraints (species shift, etc.)
-3. Check `COURSE_METHODS_REFERENCE.md` for relevant course methods (semi-supervised, feature engineering, etc.)
-4. Review `hypothesis_tracker.md` for what's been tried
-5. Consult `research/` for domain knowledge if needed
-
-### When Exploring Options
-1. Check `experiments/decision_tree.md` for paths already explored
-2. Review `experiments/experiment_log.md` for past results
-3. Avoid re-running failed approaches without new insights
-
-### When Implementing
-1. Update hypothesis status to `in_progress`
-2. Log experiment config and results
-3. Update `insights/` with new findings
-
-### When Finishing Session
-1. Update `SESSION_STATE.md` with what was accomplished
-2. Create session log if significant work done
-3. Update hypothesis tracker with outcomes
-4. Note any new hypotheses discovered
-
----
-
-## Key Constraints
-
-1. **NaN Labels**: Use masked loss - never compute loss on NaN targets
-2. **Species Shift**: Validate on species-stratified folds
-3. **Small Data**: 3360 samples - regularization critical, GBM may beat NN
-4. **Sparse Features**: 93% zeros in MALDI features
-
----
-
-## Links to Knowledge
-
-| Topic | Location |
-|-------|----------|
-| Current state & next steps | `knowledge/SESSION_STATE.md` |
-| Competition strategy | `knowledge/APPROACH_PLAN.md` |
-| **Course methods reference** | `knowledge/COURSE_METHODS_REFERENCE.md` ⭐ |
-| **EDA Conclusions (5 Truths)** | `knowledge/EDA_CONCLUSIONS_STRATEGY.md` ⭐ |
-| MALDI-TOF fundamentals | `knowledge/research/maldi_tof.md` |
-| Species-specific resistance | `knowledge/research/amr_biology.md` |
-| ML approaches | `knowledge/research/ml_sota.md` |
-| Data insights | `knowledge/insights/data_insights.md` |
-| Hypothesis queue | `knowledge/hypotheses/hypothesis_tracker.md` |
-| Experiment history | `knowledge/experiments/experiment_log.md` |
-| Decision tree | `knowledge/experiments/decision_tree.md` |
-
-**⭐ = Read before modeling**
+## Don't Waste Time On
+- Stacking/meta-learners (overfit)
+- Optimizing K.pn AUC alone (hurts mean)
+- Complex feature engineering (diminishing returns)
+- Neural networks alone (need ensemble)
+- **Unsupervised DR (PCA, KPCA, PPCA) - PROVEN TO HURT PERFORMANCE**

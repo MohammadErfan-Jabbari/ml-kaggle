@@ -1,0 +1,20 @@
+SELF-TRAINING RUN SUMMARY
+============================================================
+Run Directory: /sata_disk/users/erfan/ml_kaggle/outputs/self_training_runs/run_20260108_173807
+Timestamp: 2026-01-08T17:47:24.164864
+
+MEAN AUC: 0.8182
+Target LB: 0.83862
+
+Per-antibiotic AUC:
+  Ampicillin: 0.8834
+  Amoxicillin_Clavulanic_acid: 0.7042
+  Cefotaxime: 0.7674
+  Cefuroxime: 0.8884
+  Ciprofloxacin: 0.6912
+  Ertapenem: 0.9348
+  Imipenem: 0.9762
+  Levofloxacin: 0.6995
+
+KAGGLE COMMAND:
+kaggle competitions submit -c antimicrobial-resistance-prediction-from-maldi-tof -f /sata_disk/users/erfan/ml_kaggle/outputs/self_training_runs/run_20260108_173807/submissions/submission.csv -m 'Self-training'

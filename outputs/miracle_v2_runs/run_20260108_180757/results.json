@@ -1,0 +1,72 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/miracle_v2_runs/run_20260108_180757",
+  "timestamp": "2026-01-08T20:03:18.304787",
+  "elapsed_time": "1:55:20",
+  "n_models": 17,
+  "hardware": {
+    "n_gpus": 4,
+    "n_cpu": 32,
+    "cuda_available": true
+  },
+  "model_metrics": {
+    "LGB_1": {
+      "val_mean_auc": 0.8028905266853728
+    },
+    "LGB_2": {
+      "val_mean_auc": 0.8035012624655073
+    },
+    "LGB_3": {
+      "val_mean_auc": 0.8058443302037552
+    },
+    "LGB_4": {
+      "val_mean_auc": 0.8019442781961945
+    },
+    "LGB_5": {
+      "val_mean_auc": 0.8045197550031729
+    },
+    "XGB_1": {
+      "val_mean_auc": 0.804069847088217
+    },
+    "XGB_2": {
+      "val_mean_auc": 0.8035496945075307
+    },
+    "XGB_3": {
+      "val_mean_auc": 0.8037462380615676
+    },
+    "CatBoost_1": {
+      "val_mean_auc": 0.7985314188844437
+    },
+    "CatBoost_2": {
+      "val_mean_auc": 0.7920036334103779
+    },
+    "CatBoost_3": {
+      "val_mean_auc": 0.7965216262258772
+    },
+    "MLP_1": {
+      "val_mean_auc": 0.7995494947376998
+    },
+    "MLP_2": {
+      "val_mean_auc": 0.7978504340370625
+    },
+    "MLP_3": {
+      "val_mean_auc": 0.7992488360802683
+    },
+    "PLS20_LGB": {
+      "val_mean_auc": 0.7896242124196287
+    },
+    "PLS50_LGB": {
+      "val_mean_auc": 0.784542119363088
+    },
+    "PLS100_LGB": {
+      "val_mean_auc": 0.7841080703537197
+    }
+  },
+  "ensemble_metrics": {
+    "Rank-All": 0.8143521778318655,
+    "Weighted-All": 0.8146653718626123,
+    "Top-N-Rank": 0.8068415613665694,
+    "Meta-Blend": 0.8144636031904285
+  },
+  "best_ensemble": "Weighted-All",
+  "best_val_mean_auc": 0.8146653718626123
+}

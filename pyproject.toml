@@ -4,14 +4,18 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
+    "catboost>=1.2.8",
     "kaggle>=1.8.3",
+    "lightgbm>=4.6.0",
     "matplotlib>=3.10.8",
     "mlflow>=3.8.1",
     "numpy>=2.4.0",
     "pandas>=2.3.3",
     "pyyaml>=6.0.3",
+    "rich>=14.2.0",
     "scikit-learn>=1.8.0",
     "scipy>=1.16.3",
     "seaborn>=0.13.2",
     "torch>=2.9.1",
+    "xgboost>=3.1.2",
 ]

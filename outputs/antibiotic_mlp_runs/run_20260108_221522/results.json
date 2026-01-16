@@ -1,0 +1,40 @@
+{
+  "run_dir": "/sata_disk/users/erfan/ml_kaggle/outputs/antibiotic_mlp_runs/run_20260108_221522",
+  "timestamp": "2026-01-08T22:15:35.170533",
+  "device": "cuda",
+  "val_mean_auc": 0.7567493173480166,
+  "val_per_antibiotic": {
+    "Ampicillin": 0.8763625691765891,
+    "Levofloxacin": 0.6713956170703576,
+    "Ciprofloxacin": 0.6365384615384615,
+    "Imipenem": 0.9700259515570934,
+    "Amoxicillin_Clavulanic_acid": 0.6548376435594482,
+    "Ertapenem": 0.8177437641723355,
+    "Cefotaxime": 0.7273421831725718,
+    "Cefuroxime": 0.6997483485372759
+  },
+  "config": {
+    "pca_components": 512,
+    "transductive_pca": true,
+    "batch_size": 2048,
+    "epochs": 5,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "dropout": 0.2,
+    "hidden": "1024,512,256",
+    "antibiotic_emb_dim": 16,
+    "species_emb_dim": 8,
+    "val_fraction": 0.2,
+    "patience": 6,
+    "seed": 42
+  },
+  "pca": {
+    "kept_features": 5591,
+    "removed_constant": 409,
+    "pca_components": 512,
+    "explained_variance": 0.9061863422393799
+  },
+  "n_train_pairs": 22235,
+  "train_size": 3003,
+  "val_size": 357
+}

@@ -16,6 +16,7 @@ from torch.utils.data import DataLoader
 from data.dataset import load_train_data, split_features_targets, MaldiDataset, ANTIBIOTICS
 from models.baseline import create_model
 from utils.metrics import mean_auc, print_metrics
+from utils.loss import MaskedBCEWithLogitsLoss
 
 
 def load_config(config_path: str) -> dict:
@@ -122,7 +123,7 @@ def main():
     model = create_model(config["model"]).to(device)
 
     # Loss and optimizer (handle NaN targets with masked loss)
-    criterion = nn.BCEWithLogitsLoss(reduction='none')
+    criterion = MaskedBCEWithLogitsLoss()
     optimizer = optim.Adam(
         model.parameters(),
         lr=config["training"]["learning_rate"],
