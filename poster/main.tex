@@ -1,0 +1,165 @@
+\documentclass[final]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{qrcode}
+
+% A1 portrait: 59.4cm x 84.1cm
+\usepackage[size=custom,width=59.4,height=84.1,scale=1.0]{beamerposter}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{Accent}{RGB}{0,90,140}
+\setbeamercolor{title}{fg=Accent}
+\setbeamercolor{block title}{fg=white,bg=Accent}
+\setbeamercolor{block body}{bg=black!2,fg=black}
+
+\newcommand{\maybeincludegraphics}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][0.18\textheight][c]{0.95\linewidth}{\centering Missing figure:\\ \texttt{#2}}}%
+  }%
+}
+
+\title{AMR Prediction from MALDI-TOF: Exploration of Multi-Label and Semi-Supervised Methods}
+\author{\texorpdfstring{MohammadErfan Jabbari$^{1,2}$ \and Ana Mirza$^{1}$}{MohammadErfan Jabbari and Ana Mirza}}
+\institute{$^{1}$Universidad Carlos III de Madrid (UC3M) \hspace{1.2em} $^{2}$IMDEA Networks Institute}
+\date{}
+
+\begin{document}
+\begin{frame}[t]
+\vspace{-0.5cm}
+\begin{columns}[t,totalwidth=\linewidth]
+
+% =========================
+% Column 1
+% =========================
+\begin{column}{0.32\linewidth}
+
+\begin{block}{Project Workflow}
+\begin{itemize}
+  \item Iterative loop: EDA $\rightarrow$ hypothesis $\rightarrow$ experiment $\rightarrow$ validation $\rightarrow$ submission.
+  \item Target metric: mean AUC across 8 antibiotics (Kaggle evaluation).
+  \item Goal: compare supervised, semi-supervised, and ensemble strategies under domain shift.
+\end{itemize}
+\end{block}
+
+\begin{block}{EDA-Driven Insights (What Shaped Modeling)}
+\vspace{0.2cm}
+\maybeincludegraphics[width=\linewidth]{figs/species_distribution.png}
+\vspace{0.3cm}
+\maybeincludegraphics[width=\linewidth]{figs/missing_label_heatmap.png}
+\vspace{0.3cm}
+\maybeincludegraphics[width=\linewidth]{figs/sparsity_by_feature.png}
+\vspace{0.2cm}
+\begin{itemize}
+  \item Severe species distribution shift $\Rightarrow$ validation must mimic test distribution.
+  \item Systematic missing labels (esp. Amox/Clav) $\Rightarrow$ mask NaNs, consider pseudo-labeling.
+  \item High sparsity $\Rightarrow$ tree models (LightGBM) are strong baselines.
+\end{itemize}
+\end{block}
+
+\end{column}
+
+% =========================
+% Column 2
+% =========================
+\begin{column}{0.36\linewidth}
+
+\begin{block}{Approaches Explored}
+\small
+\begin{tabular}{@{}p{0.42\linewidth}p{0.52\linewidth}@{}}
+\toprule
+\textbf{Family} & \textbf{What we tested / learned} \\
+\midrule
+Baseline & LightGBM per antibiotic with NaN-masking and species-aware validation. \\
+Biology rules & Intrinsic resistance rules for specific species/antibiotics (free-confidence predictions). \\
+Reweighting & Species-based sample weights to counter train/test shift. \\
+Dimensionality reduction & PLS + LGB (useful); PCA/KPCA/PPCA (hurt in our runs). \\
+Ensembling & Rank averaging robust; stacking overfit (high OOF, worse leaderboard). \\
+Semi-supervised & Self-training via pseudo-labels improved validation but did not beat best ensemble. \\
+Species-specific & Separate models per species reduced data per model and underperformed overall. \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{block}
+
+\begin{block}{Validation Strategy}
+\begin{itemize}
+  \item Used a held-out validation split matching the test species distribution to reduce OOF optimism.
+  \item Selection criterion: \textbf{mean AUC across all 8 tasks} (avoid optimizing a single species metric).
+\end{itemize}
+\end{block}
+
+\begin{block}{What Failed (and Why It Matters)}
+\begin{itemize}
+  \item \textbf{Stacking}: overfit under distribution shift (excellent OOF, worse leaderboard).
+  \item \textbf{Unsupervised DR (PCA variants)}: removed discriminative sparse structure for tree models.
+  \item \textbf{Single-metric tuning}: improving one slice can reduce mean-AUC across tasks.
+\end{itemize}
+\end{block}
+
+\end{column}
+
+% =========================
+% Column 3
+% =========================
+\begin{column}{0.32\linewidth}
+
+\begin{block}{Submission Results (Public vs Private)}
+\small
+\begin{tabular}{@{}p{0.62\linewidth}rr@{}}
+\toprule
+\textbf{Submission} & \textbf{Public} & \textbf{Private} \\
+\midrule
+Mega-blend (rank avg) & 0.83862 & 0.81307 \\
+Final mega ST rank & 0.83660 & 0.80938 \\
+Baseline (Ana) & 0.80223 & 0.78556 \\
+MSDeepAMR (semi-supervised) & 0.70025 & 0.66517 \\
+MSDeepAMR (alt) & 0.69924 & 0.66328 \\
+\bottomrule
+\end{tabular}
+\normalsize
+\vspace{0.3cm}
+\begin{itemize}
+  \item Private leaderboard improved vs public (rank change: +4 in final standings screenshot).
+\end{itemize}
+\end{block}
+
+\begin{block}{Key Takeaways}
+\begin{itemize}
+  \item Robust validation under domain shift is as important as model choice.
+  \item Domain knowledge (intrinsic resistance) can yield high-confidence predictions.
+  \item Simple, diverse ensembles (rank averaging) outperform complex meta-learners in this setting.
+  \item Semi-supervised learning is promising but needs careful thresholding to avoid noise.
+\end{itemize}
+\end{block}
+
+\begin{block}{Team Contributions}
+\begin{itemize}
+  \item MohammadErfan: ensembling, validation design, LightGBM/PLS pipeline, experiment orchestration.
+  \item Ana: baseline submissions, semi-supervised MSDeepAMR exploration, documentation support.
+\end{itemize}
+\end{block}
+
+\begin{block}{Reproducibility}
+\begin{itemize}
+  \item Code + logs in repository; key entrypoints:
+  \item \texttt{uv run python experiments/run\_mega\_blend.py}
+  \item \texttt{uv run python experiments/run\_self\_training.py}
+\end{itemize}
+\vspace{0.2cm}
+\centering
+\qrcode[height=3.5cm]{https://github.com/MohammadErfan-Jabbari/ml-kaggle}
+\end{block}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+\end{document}
