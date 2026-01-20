@@ -42,3 +42,16 @@ Thumbs.db
 logs/
 # Exclude large model runs but preserve submissions
 outputs/*/runs/
+.DS_Store
+
+# LaTeX build artifacts (poster)
+poster/*.aux
+poster/*.log
+poster/*.out
+poster/*.toc
+poster/*.nav
+poster/*.snm
+poster/*.fls
+poster/*.fdb_latexmk
+poster/*.synctex.gz
+poster/*.pdf
