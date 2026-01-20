@@ -147,3 +147,12 @@ Session 5 comprehensive experimentation: 15+ methods tested across 3 rounds. Bes
 
 ---
 
+## Final Scores (Public vs Private) — From Kaggle Screenshots
+
+| Submission file | Public | Private |
+|---|---:|---:|
+| `sub_mega_blend_rank_avg_20260107_2057.csv` | 0.83862 | 0.81307 |
+| `sub_final_mega_st_rank_20260108_215951.csv` | 0.83660 | 0.80938 |
+| `kaggle_submission.csv` | 0.80223 | 0.78556 |
+| `semisupervised_msdeepamr_submission.csv` | 0.70025 | 0.66517 |
+| `msdeepamr_submission.csv` | 0.69924 | 0.66328 |
