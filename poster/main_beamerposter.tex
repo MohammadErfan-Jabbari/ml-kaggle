@@ -1,0 +1,151 @@
+\documentclass[final]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{qrcode}
+
+% A1 portrait: 59.4cm x 84.1cm
+\usepackage[size=custom,width=59.4,height=84.1,scale=1.0]{beamerposter}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{Accent}{RGB}{0,90,140}
+\setbeamercolor{title}{fg=Accent}
+\setbeamercolor{block title}{fg=white,bg=Accent}
+\setbeamercolor{block body}{bg=black!2,fg=black}
+
+\newcommand{\maybeincludegraphics}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][0.18\textheight][c]{0.95\linewidth}{\centering Missing figure:\\ \texttt{#2}}}%
+  }%
+}
+
+\title{AMR Prediction from MALDI-TOF: Exploration of Multi-Label and Semi-Supervised Methods}
+\author{\texorpdfstring{MohammadErfan Jabbari$^{1,2}$ \and Ana Mirza$^{1}$}{MohammadErfan Jabbari and Ana Mirza}}
+\institute{$^{1}$Universidad Carlos III de Madrid (UC3M) \hspace{1.2em} $^{2}$IMDEA Networks Institute}
+\date{}
+
+\begin{document}
+\begin{frame}[t]
+\vspace{-0.6cm}
+
+\begin{block}{Key Message}
+\begin{center}
+{\LARGE \textbf{In this Kaggle AMR task, domain constraints beat fancy modeling.}}\\[0.25cm]
+{\Large Species shift + missing labels $\Rightarrow$ species-aware validation, intrinsic resistance rules, and \textbf{rank-averaged ensembles}.}\\[0.4cm]
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ccc@{}}
+\textbf{Best Public Mean AUC} & \textbf{Best Private Mean AUC} & \textbf{Final Rank Change} \\
+{\huge 0.8386} & {\huge 0.8131} & {\huge +4} \\
+\end{tabular}
+\end{center}
+\end{block}
+
+\vspace{0.1cm}
+\begin{columns}[t,totalwidth=\linewidth]
+
+% =========================
+% Column 1 (Left)
+% =========================
+\begin{column}{0.49\linewidth}
+
+\begin{block}{Problem \& Dataset}
+\begin{itemize}
+  \item Goal: predict resistance (0/1) for \textbf{8 antibiotics} from \textbf{6,000 MALDI-TOF} features (multi-label).
+  \item Metric: \textbf{mean AUC across antibiotics}.
+  \item Challenge: \textbf{species distribution shift} + \textbf{systematic missing labels} (semi-supervised setting).
+\end{itemize}
+\end{block}
+
+\begin{block}{EDA: The 3 Constraints That Shaped Everything}
+\vspace{0.15cm}
+\maybeincludegraphics[width=\linewidth]{figs/species_distribution.png}
+\vspace{0.25cm}
+\maybeincludegraphics[width=\linewidth]{figs/missing_label_heatmap.png}
+\vspace{0.25cm}
+\maybeincludegraphics[width=\linewidth]{figs/sparsity_by_feature.png}
+\vspace{0.15cm}
+\begin{itemize}
+  \item \textbf{Shift}: train $\neq$ test species mix $\Rightarrow$ validation must mimic test distribution.
+  \item \textbf{Missingness}: labels missing non-randomly (esp. Amox/Clav) $\Rightarrow$ always mask NaNs.
+  \item \textbf{Sparsity}: MALDI features are mostly zeros $\Rightarrow$ tree models are strong baselines.
+\end{itemize}
+\end{block}
+
+\end{column}
+
+% =========================
+% Column 2 (Right)
+% =========================
+\begin{column}{0.49\linewidth}
+
+\begin{block}{Methods (What We Tried)}
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{0.34\linewidth}p{0.60\linewidth}@{}}
+\toprule
+\textbf{Family} & \textbf{Takeaway} \\
+\midrule
+Baseline (LGB) & Solid starting point for sparse MALDI features. \\
+Intrinsic rules & High-confidence shortcuts for known species/antibiotic pairs. \\
+Species reweighting & Counter shift by up/down-weighting species. \\
+PLS / DR & PLS helped; PCA-like DR hurt in our runs. \\
+Ensembling & \textbf{Rank averaging} robust; stacking overfit under shift. \\
+Semi-supervised & Self-training helped locally; did not beat best rank-avg ensemble. \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{block}
+
+\begin{block}{Validation Strategy (Avoiding the Trap)}
+\begin{itemize}
+  \item Held-out validation split matching \textbf{test species distribution}.
+  \item Model selection on \textbf{mean AUC across all 8 tasks} (not a single species).
+\end{itemize}
+\end{block}
+
+\begin{block}{Results \& Lessons}
+\small
+\begin{tabular}{@{}p{0.62\linewidth}rr@{}}
+\toprule
+\textbf{Submission} & \textbf{Public} & \textbf{Private} \\
+\midrule
+\textbf{Mega-blend (rank avg)} & \textbf{0.83862} & \textbf{0.81307} \\
+Final mega ST rank & 0.83660 & 0.80938 \\
+Baseline (Ana) & 0.80223 & 0.78556 \\
+\bottomrule
+\end{tabular}
+\normalsize
+\vspace{0.25cm}
+\begin{itemize}
+  \item \textbf{Stacking overfit}: great OOF, worse leaderboard.
+  \item \textbf{Domain knowledge mattered}: intrinsic resistance yields free-confidence predictions.
+  \item Private leaderboard improved vs public (rank change: +4 in final screenshot).
+\end{itemize}
+\end{block}
+
+\begin{block}{Team \& Reproducibility}
+\begin{itemize}
+  \item MohammadErfan: validation design, ensembling, LGB/PLS pipeline, orchestration.
+  \item Ana: baseline submissions, MSDeepAMR exploration, documentation.
+  \item \texttt{uv run python experiments/run\_mega\_blend.py} \hspace{1em}
+        \texttt{uv run python experiments/run\_self\_training.py}
+\end{itemize}
+\vspace{0.1cm}
+\centering
+\qrcode[height=3.2cm]{https://github.com/MohammadErfan-Jabbari/ml-kaggle}
+\end{block}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+\end{document}

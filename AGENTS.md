@@ -11,7 +11,7 @@
 - **End of each session**
   1) Update `knowledge/POSTER_STATE.md` (what changed + decision log)
   2) Update `knowledge/POSTER_TODO.md` (check off items)
-  3) If LaTeX poster changed, ensure `poster/main.tex` still compiles locally.
+  3) If LaTeX poster changed, run `./poster/build.sh` to generate both `poster/main.pdf` and a visual preview `poster/main.png`, then sanity-check the PNG (quickest way to catch layout issues).
 
 ### Competition context (from provided Kaggle PDF)
 - Task: predict resistance (0/1) for **8 antibiotics** per sample (multi-label).

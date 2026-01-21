@@ -4,162 +4,340 @@
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{array}
-\usepackage{microtype}
 \usepackage{xcolor}
-\usepackage{qrcode}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
-% A1 portrait: 59.4cm x 84.1cm
-\usepackage[size=custom,width=59.4,height=84.1,scale=1.0]{beamerposter}
+% A1 portrait: 594mm x 841mm
+\usepackage[size=a1,orientation=portrait,scale=1.15]{beamerposter}
 
 \usetheme{default}
 \setbeamertemplate{navigation symbols}{}
 
-\definecolor{Accent}{RGB}{0,90,140}
-\setbeamercolor{title}{fg=Accent}
-\setbeamercolor{block title}{fg=white,bg=Accent}
-\setbeamercolor{block body}{bg=black!2,fg=black}
+% --- Colors ---
+\definecolor{DarkBlue}{HTML}{1a365d}
+\definecolor{Accent}{HTML}{e53e3e}
+\definecolor{LightGray}{HTML}{f7fafc}
 
-\newcommand{\maybeincludegraphics}[2][]{%
-  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
-    \fbox{\parbox[c][0.18\textheight][c]{0.95\linewidth}{\centering Missing figure:\\ \texttt{#2}}}%
-  }%
+\setbeamercolor{headline}{fg=white,bg=DarkBlue}
+\setbeamercolor{block title}{fg=DarkBlue,bg=white}
+\setbeamercolor{block body}{fg=black,bg=LightGray}
+
+% --- Fonts ---
+\setbeamerfont{headline title}{size=\VeryHuge,series=\bfseries}
+\setbeamerfont{headline author}{size=\LARGE}
+\setbeamerfont{block title}{size=\LARGE,series=\bfseries,family=\sffamily}
+\setbeamerfont{block body}{size=\large}
+
+% --- Block style ---
+\setbeamertemplate{block begin}{
+  \vskip1ex
+  \begin{beamercolorbox}[leftskip=1cm,rightskip=1cm]{block title}
+    \usebeamerfont{block title}\insertblocktitle
+  \end{beamercolorbox}
+  \vskip-0.5ex
+  {\color{Accent}\rule{\linewidth}{2pt}}
+  \vskip1ex
+  \begin{beamercolorbox}[leftskip=1cm,rightskip=1cm,vmode]{block body}
+    \usebeamerfont{block body}\vspace{0.3em}
 }
-
-\title{AMR Prediction from MALDI-TOF: Exploration of Multi-Label and Semi-Supervised Methods}
-\author{\texorpdfstring{MohammadErfan Jabbari$^{1,2}$ \and Ana Mirza$^{1}$}{MohammadErfan Jabbari and Ana Mirza}}
-\institute{$^{1}$Universidad Carlos III de Madrid (UC3M) \hspace{1.2em} $^{2}$IMDEA Networks Institute}
-\date{}
+\setbeamertemplate{block end}{
+  \vspace{0.5em}
+  \end{beamercolorbox}
+  \vskip1.2ex
+}
 
 \begin{document}
 \begin{frame}[t]
-\vspace{-0.5cm}
-\begin{columns}[t,totalwidth=\linewidth]
 
-% =========================
-% Column 1
-% =========================
-\begin{column}{0.32\linewidth}
+% ============================================================
+% HEADER
+% ============================================================
+\begin{beamercolorbox}[wd=\paperwidth,ht=7cm,dp=0.8cm,leftskip=2cm,rightskip=2cm]{headline}
+  \vspace{0.8cm}
+  {\fontsize{58}{66}\selectfont\bfseries AMR Prediction: Lessons from Distribution Shift\par}
+  \vspace{0.4cm}
+  {\usebeamerfont{headline author} MohammadErfan Jabbari$^{1,2}$ \quad \& \quad Ana Mirza$^{1}$\par}
+  \vspace{0.2cm}
+  {\large $^{1}$Universidad Carlos III de Madrid \enspace $\cdot$ \enspace $^{2}$IMDEA Networks Institute\par}
+\end{beamercolorbox}
+% Header accent line using TikZ for full width
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[Accent] ([yshift=-8.0cm]current page.north west) rectangle ([yshift=-8.3cm]current page.north east);
+\end{tikzpicture}
 
-\begin{block}{Project Workflow}
-\begin{itemize}
-  \item Iterative loop: EDA $\rightarrow$ hypothesis $\rightarrow$ experiment $\rightarrow$ validation $\rightarrow$ submission.
-  \item Target metric: mean AUC across 8 antibiotics (Kaggle evaluation).
-  \item Goal: compare supervised, semi-supervised, and ensemble strategies under domain shift.
-\end{itemize}
+\vspace{0.2cm}
+
+% ============================================================
+% TWO COLUMNS
+% ============================================================
+\begin{columns}[t,totalwidth=\textwidth]
+
+% --- LEFT COLUMN ---
+\begin{column}{0.48\textwidth}
+
+\begin{block}{1. The Challenges}
+Three properties of this dataset shaped every modeling decision:
+
+\vspace{0.8em}
+\textbf{1. Species Distribution Shift}\\[0.3em]
+The training set is dominated by \textit{P.~aeruginosa} (43\%), but this species represents only 3\% of the test set. Meanwhile, \textit{K.~pneumoniae} jumps from 28\% to 51\%. Any model that performs well on training validation will be optimizing for the wrong population.
+
+\vspace{0.5em}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    width=0.78\linewidth,
+    height=8cm,
+    xlabel={\textbf{\% of samples}},
+    xlabel style={font=\large},
+    symbolic y coords={P. aeruginosa, P. mirabilis, E. coli, K. pneumoniae},
+    ytick=data,
+    yticklabel style={font=\large\itshape, rotate=25, anchor=east},
+    xmin=0, xmax=60,
+    xtick={0,10,20,30,40,50},
+    xticklabel style={font=\normalsize},
+    legend style={at={(0.97,0.03)}, anchor=south east, font=\normalsize, draw=none, fill=white, fill opacity=0.9},
+    bar width=12pt,
+    enlarge y limits=0.35,
+    nodes near coords,
+    nodes near coords style={font=\normalsize\bfseries, /pgf/number format/fixed, /pgf/number format/precision=1},
+    every node near coord/.append style={anchor=west, xshift=2pt},
+]
+\addplot[fill=DarkBlue, draw=DarkBlue!80] coordinates {(43.1,P. aeruginosa) (12.4,P. mirabilis) (16.6,E. coli) (27.9,K. pneumoniae)};
+\addplot[fill=Accent, draw=Accent!80] coordinates {(3.0,P. aeruginosa) (19.3,P. mirabilis) (26.9,E. coli) (50.8,K. pneumoniae)};
+\legend{Train, Test}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{0.3em}
+{\normalsize\textbf{Figure 1:} \textit{P.~aeruginosa} dominates training (43\%) but nearly vanishes in test (3\%). Models optimizing for training distribution will fail.}
+\end{center}
+
+\vspace{0.6em}
+\textbf{2. Extreme Feature Sparsity}\\[0.3em]
+93\% of the MALDI-TOF feature matrix is zeros. The signal lives in sparse intensity peaks, not dense patterns. This favors tree-based models (LightGBM) over neural networks, and makes aggressive dimensionality reduction dangerous: compress too hard and you discard the few features that matter.
+
+\vspace{0.8em}
+\textbf{3. Non-Random Missing Labels}\\[0.3em]
+Label missingness is not uniform: 43\% of Amoxicillin/Clavulanic acid labels are missing, compared to under 3\% for most other antibiotics. This reflects clinical testing practices, not random noise. Ignoring the pattern or imputing naively corrupts the learning signal.
+
+\vspace{0.6em}
+These three facts explain most of what worked and what failed.
 \end{block}
 
-\begin{block}{EDA-Driven Insights (What Shaped Modeling)}
-\vspace{0.2cm}
-\maybeincludegraphics[width=\linewidth]{figs/species_distribution.png}
-\vspace{0.3cm}
-\maybeincludegraphics[width=\linewidth]{figs/missing_label_heatmap.png}
-\vspace{0.3cm}
-\maybeincludegraphics[width=\linewidth]{figs/sparsity_by_feature.png}
-\vspace{0.2cm}
-\begin{itemize}
-  \item Severe species distribution shift $\Rightarrow$ validation must mimic test distribution.
-  \item Systematic missing labels (esp. Amox/Clav) $\Rightarrow$ mask NaNs, consider pseudo-labeling.
-  \item High sparsity $\Rightarrow$ tree models (LightGBM) are strong baselines.
-\end{itemize}
+\begin{block}{2. What We Explored}
+We systematically tested approaches across five categories before converging on the final pipeline:
+
+\vspace{0.8em}
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={minimum width=3.6cm, minimum height=1.1cm, rounded corners=3pt, font=\normalsize\bfseries, text=white, align=center},
+    worked/.style={box, fill=DarkBlue!85},
+    partial/.style={box, fill=orange!80!black},
+    failed/.style={box, fill=Accent!85},
+    category/.style={font=\large\bfseries, text=DarkBlue, anchor=east},
+]
+
+% Row 1: Models
+\node[category] at (-1.2, 0) {Models};
+\node[worked] at (2.0, 0) {LightGBM};
+\node[worked] at (6.0, 0) {XGBoost};
+\node[worked] at (10.0, 0) {CatBoost};
+\node[failed] at (14.0, 0) {MLP};
+
+% Row 2: Dim Reduction
+\node[category] at (-1.2, -1.6) {Dim.~Reduction};
+\node[worked] at (2.0, -1.6) {PLS};
+\node[partial] at (6.0, -1.6) {PCA};
+\node[failed] at (10.0, -1.6) {KPCA};
+\node[failed] at (14.0, -1.6) {NMF};
+
+% Row 3: Ensembles
+\node[category] at (-1.2, -3.2) {Ensembles};
+\node[worked] at (2.0, -3.2) {Rank Avg};
+\node[failed] at (6.0, -3.2) {Stacking};
+\node[partial] at (10.0, -3.2) {Weighted};
+
+% Row 4: Other
+\node[category] at (-1.2, -4.8) {Other};
+\node[partial] at (2.0, -4.8) {Self-Train};
+\node[failed] at (6.0, -4.8) {32 Species};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5em}
+\begin{center}
+\begin{tikzpicture}[
+    legendbox/.style={minimum width=0.8cm, minimum height=0.5cm, rounded corners=2pt},
+]
+\node[legendbox, fill=DarkBlue!85] at (0, 0) {};
+\node[font=\normalsize, anchor=west] at (0.55, 0) {Worked};
+\node[legendbox, fill=orange!80!black] at (4, 0) {};
+\node[font=\normalsize, anchor=west] at (4.55, 0) {Partial};
+\node[legendbox, fill=Accent!85] at (8, 0) {};
+\node[font=\normalsize, anchor=west] at (8.55, 0) {Failed};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5em}
+\begin{center}
+{\normalsize\textbf{Figure 2:} Failures were informative: stacking overfit, species-specific models lacked data, aggressive DR lost signal.}
+\end{center}
+\end{block}
+
+\vfill
+
+\begin{block}{3. Results}
+\vspace{0.3em}
+\begin{center}
+{\setlength{\tabcolsep}{1.2em}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Submission} & \textbf{Public LB} & \textbf{Private LB} & \textbf{OOF CV} \\
+\midrule
+\rowcolor{DarkBlue!10} \textbf{Mega-blend (rank avg)} & \textbf{0.8386} & \textbf{0.8131} & 0.8174 \\
+Self-training blend & 0.8366 & 0.8094 & 0.8052 \\
+LightGBM + PLS & 0.8323 & 0.8012 & 0.7986 \\
+\rowcolor{Accent!10} Stacking (overfit) & 0.8269 & 0.7840 & \textit{0.9545} \\
+Baseline & 0.8022 & 0.7856 & 0.7823 \\
+\bottomrule
+\end{tabular}}
+\end{center}
+
+\vspace{0.5em}
+\begin{center}
+{\normalsize\textbf{Table 1:} Stacking achieved OOF 0.9545 but collapsed on private leaderboard.}
+\end{center}
+
+\vspace{0.5em}
+\textbf{Lesson:} Under distribution shift, simple and robust beats clever and brittle.
 \end{block}
 
 \end{column}
 
-% =========================
-% Column 2
-% =========================
-\begin{column}{0.36\linewidth}
+% --- RIGHT COLUMN ---
+\begin{column}{0.48\textwidth}
 
-\begin{block}{Approaches Explored}
-\small
-\begin{tabular}{@{}p{0.42\linewidth}p{0.52\linewidth}@{}}
-\toprule
-\textbf{Family} & \textbf{What we tested / learned} \\
-\midrule
-Baseline & LightGBM per antibiotic with NaN-masking and species-aware validation. \\
-Biology rules & Intrinsic resistance rules for specific species/antibiotics (free-confidence predictions). \\
-Reweighting & Species-based sample weights to counter train/test shift. \\
-Dimensionality reduction & PLS + LGB (useful); PCA/KPCA/PPCA (hurt in our runs). \\
-Ensembling & Rank averaging robust; stacking overfit (high OOF, worse leaderboard). \\
-Semi-supervised & Self-training via pseudo-labels improved validation but did not beat best ensemble. \\
-Species-specific & Separate models per species reduced data per model and underperformed overall. \\
-\bottomrule
-\end{tabular}
-\normalsize
+\begin{block}{4. What Worked}
+Three techniques lifted our score from 0.80 baseline to 0.81 private:
+
+\vspace{0.6em}
+\textbf{1. Rank Averaging over Stacking}\\[0.3em]
+Stacking learns to trust your validation signal. Under distribution shift, that trust is misplaced. Rank averaging converts predictions to ranks before blending, normalizing scale differences between models and reducing sensitivity to outliers. It stays skeptical.
+
+\vspace{0.3em}
+\begin{center}
+$\displaystyle \hat{y}_{\text{blend}} = \frac{1}{M}\sum_{m=1}^{M} \frac{\text{rank}(\hat{y}_m)}{N}$
+\quad {\small(M=3 models, N=samples)}
+\end{center}
+
+\vspace{0.6em}
+\textbf{2. Species-Aware Weighting}\\[0.3em]
+Knowing that \textit{K.~pneumoniae} dominates the test set (51\%) and \textit{P.~aeruginosa} nearly vanishes (3\%), we up-weighted K.~pneumoniae predictions by 3$\times$ and down-weighted P.~aeruginosa to 0.1$\times$. Simple rebalancing that matches the deployment distribution.
+
+\vspace{0.6em}
+\textbf{3. Intrinsic Resistance Rules}\\[0.3em]
+Certain species are intrinsically resistant to certain antibiotics. This biological prior gives us 18.8\% of predictions for free with 100\% confidence. We override model outputs with hard-coded resistance where clinical rules apply.
+
+\vspace{0.8em}
+\begin{center}
+\begin{tikzpicture}[
+    node distance=0.8cm,
+    box/.style={draw=DarkBlue, fill=LightGray, rounded corners=4pt, minimum width=3.8cm, minimum height=1cm, font=\normalsize, align=center, thick},
+    arrow/.style={->, thick, DarkBlue!80},
+]
+\node[box] (lgb) {LightGBM + PLS};
+\node[box, right=of lgb] (xgb) {XGBoost};
+\node[box, right=of xgb] (cat) {CatBoost};
+
+\node[box, below=1.2cm of xgb, fill=DarkBlue!15, minimum width=5cm] (rank) {Rank Average};
+
+\node[box, below=1cm of rank, fill=orange!20, minimum width=5cm] (species) {Species Weighting};
+
+\node[box, below=1cm of species, fill=DarkBlue!25, minimum width=5cm] (rules) {Intrinsic Resistance};
+
+\draw[arrow] (lgb) -- (rank);
+\draw[arrow] (xgb) -- (rank);
+\draw[arrow] (cat) -- (rank);
+\draw[arrow] (rank) -- (species);
+\draw[arrow] (species) -- (rules);
+
+\node[right=0.3cm of rules, font=\small\bfseries, text=DarkBlue] {Final};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3em}
+\begin{center}
+{\normalsize\textbf{Figure 3:} Final pipeline. Training: 5-fold stratified CV, LightGBM (lr=0.03, 300 trees, 31 leaves), PLS 100 components.}
+\end{center}
+
+\vspace{0.5em}
+\textbf{Why PLS?} Partial Least Squares projects features using target labels, preserving signal that correlates with resistance. Unsupervised methods (PCA, NMF) optimize variance, discarding predictive but low-variance peaks.
 \end{block}
 
-\begin{block}{Validation Strategy}
-\begin{itemize}
-  \item Used a held-out validation split matching the test species distribution to reduce OOF optimism.
-  \item Selection criterion: \textbf{mean AUC across all 8 tasks} (avoid optimizing a single species metric).
-\end{itemize}
+\begin{block}{5. What Failed \& Why}
+Honest lessons from approaches that did not improve our score:
+
+\vspace{0.6em}
+\textbf{Stacking} (OOF 0.9545 $\rightarrow$ LB 0.827)\\[0.2em]
+The meta-learner memorized validation patterns that did not generalize. High OOF score was a trap, not a signal.
+
+\vspace{0.5em}
+\textbf{Species-Specific Models} (32 separate models)\\[0.2em]
+Splitting by species left too few samples per model. \textit{P.~aeruginosa} had 4,100 training rows but represents only 3\% of test. Underfitting dominated.
+
+\vspace{0.5em}
+\textbf{Aggressive Dimensionality Reduction}\\[0.2em]
+KPCA and NMF compressed too hard, discarding sparse intensity peaks that carried signal. PLS succeeded because it uses the target during projection.
+
+\vspace{0.5em}
+\textbf{K.~pneumoniae-Only Optimization}\\[0.2em]
+We tried tuning exclusively for K.~pneumoniae (51\% of test). This hurt E.~coli and P.~mirabilis enough to lower overall score. The metric is macro-averaged.
+
+\vspace{0.8em}
+\begin{center}
+\fcolorbox{DarkBlue}{LightGray}{%
+\parbox{0.88\linewidth}{%
+\centering\large\textit{``Stacking learns to trust your validation signal.\\Rank averaging stays skeptical.\\Under distribution shift, skepticism wins.''}
+}}
+\end{center}
 \end{block}
 
-\begin{block}{What Failed (and Why It Matters)}
-\begin{itemize}
-  \item \textbf{Stacking}: overfit under distribution shift (excellent OOF, worse leaderboard).
-  \item \textbf{Unsupervised DR (PCA variants)}: removed discriminative sparse structure for tree models.
-  \item \textbf{Single-metric tuning}: improving one slice can reduce mean-AUC across tasks.
-\end{itemize}
-\end{block}
+\vfill
 
-\end{column}
-
-% =========================
-% Column 3
-% =========================
-\begin{column}{0.32\linewidth}
-
-\begin{block}{Submission Results (Public vs Private)}
-\small
-\begin{tabular}{@{}p{0.62\linewidth}rr@{}}
-\toprule
-\textbf{Submission} & \textbf{Public} & \textbf{Private} \\
-\midrule
-Mega-blend (rank avg) & 0.83862 & 0.81307 \\
-Final mega ST rank & 0.83660 & 0.80938 \\
-Baseline (Ana) & 0.80223 & 0.78556 \\
-MSDeepAMR (semi-supervised) & 0.70025 & 0.66517 \\
-MSDeepAMR (alt) & 0.69924 & 0.66328 \\
-\bottomrule
-\end{tabular}
-\normalsize
-\vspace{0.3cm}
-\begin{itemize}
-  \item Private leaderboard improved vs public (rank change: +4 in final standings screenshot).
-\end{itemize}
-\end{block}
-
-\begin{block}{Key Takeaways}
-\begin{itemize}
-  \item Robust validation under domain shift is as important as model choice.
-  \item Domain knowledge (intrinsic resistance) can yield high-confidence predictions.
-  \item Simple, diverse ensembles (rank averaging) outperform complex meta-learners in this setting.
-  \item Semi-supervised learning is promising but needs careful thresholding to avoid noise.
-\end{itemize}
-\end{block}
-
-\begin{block}{Team Contributions}
-\begin{itemize}
-  \item MohammadErfan: ensembling, validation design, LightGBM/PLS pipeline, experiment orchestration.
-  \item Ana: baseline submissions, semi-supervised MSDeepAMR exploration, documentation support.
-\end{itemize}
-\end{block}
-
-\begin{block}{Reproducibility}
-\begin{itemize}
-  \item Code + logs in repository; key entrypoints:
-  \item \texttt{uv run python experiments/run\_mega\_blend.py}
-  \item \texttt{uv run python experiments/run\_self\_training.py}
-\end{itemize}
-\vspace{0.2cm}
-\centering
-\qrcode[height=3.5cm]{https://github.com/MohammadErfan-Jabbari/ml-kaggle}
+\begin{block}{6. References}
+\vspace{0.2em}
+{\small
+\textbf{[1]} Weis et al. \textit{Nature Medicine} 28, 164--174 (2022). DRIAMS dataset.\\[0.2em]
+\textbf{[2]} Ke et al. \textit{NeurIPS} 30, 3146--3154 (2017). LightGBM.\\[0.2em]
+\textbf{[3]} Chen \& Guestrin. \textit{KDD}, 785--794 (2016). XGBoost.\\[0.2em]
+\textbf{[4]} Prokhorenkova et al. \textit{NeurIPS} 31, 6638--6648 (2018). CatBoost.
+}
 \end{block}
 
 \end{column}
 
 \end{columns}
+
+\vfill
+
+% ============================================================
+% FOOTER (using TikZ for precise positioning)
+% ============================================================
+\begin{tikzpicture}[remember picture,overlay]
+  % Dark blue footer bar (taller: 2.5cm)
+  \fill[DarkBlue] (current page.south west) rectangle ([yshift=2.5cm]current page.south east);
+  % Red accent line on top of footer
+  \fill[Accent] ([yshift=2.5cm]current page.south west) rectangle ([yshift=2.8cm]current page.south east);
+  % Footer text
+  \node[anchor=center, text=white, font=\large] at ([yshift=1.25cm]current page.south) {UC3M Machine Learning \enspace $\cdot$ \enspace January 2026 \enspace $\cdot$ \enspace Kaggle AMR Prediction Challenge};
+\end{tikzpicture}
+
 \end{frame}
 \end{document}
