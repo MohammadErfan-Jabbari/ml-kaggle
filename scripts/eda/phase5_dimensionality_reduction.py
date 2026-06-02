@@ -46,8 +46,8 @@ plt.rcParams['axes.titlesize'] = 12
 plt.rcParams['legend.fontsize'] = 9
 
 # Paths
-DATA_DIR = Path("/sata_disk/users/erfan/ml_kaggle/raw")
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase5")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs/eda/phase5")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Constants
@@ -680,7 +680,7 @@ Silhouette scores for antibiotic resistance in PCA space indicate whether resist
 """
 
     # Save report
-    report_path = Path("/sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase5_dimensionality.md")
+    report_path = Path("/home/centcom/data/ml_kaggle/knowledge/insights/eda_phase5_dimensionality.md")
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(report_path, 'w') as f:

@@ -41,7 +41,7 @@ ANTIBIOTIC_SHORT = {
     "Ertapenem": "ETP", "Imipenem": "IPM", "Levofloxacin": "LVX"
 }
 
-OUTPUT_BASE = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
+OUTPUT_BASE = Path("/home/centcom/data/ml_kaggle/outputs")
 
 
 # =============================================================================
@@ -261,7 +261,7 @@ def main():
     submissions_dir.mkdir(exist_ok=True)
 
     # Load test sample IDs
-    test_df = pd.read_csv("/home/erfan/data/ml_kaggle/raw/test.csv")
+    test_df = pd.read_csv("/home/centcom/data/ml_kaggle/raw/test.csv")
     sample_ids = test_df['sample_id'].values
 
     results_table = Table(title="[bold]Blend Submissions Created[/]", box=box.ROUNDED)

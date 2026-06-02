@@ -26,8 +26,8 @@ plt.style.use('seaborn-v0_8-whitegrid')
 sns.set_palette("husl")
 
 # Paths
-DATA_DIR = "/sata_disk/users/erfan/ml_kaggle/raw"
-OUTPUT_DIR = "/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase3"
+DATA_DIR = "/home/centcom/data/ml_kaggle/raw"
+OUTPUT_DIR = "/home/centcom/data/ml_kaggle/outputs/eda/phase3"
 
 # Antibiotic names
 ANTIBIOTICS = [
@@ -457,7 +457,7 @@ def generate_report(balance_df, missing_counts, missing_pct, corr_df,
     report = f"""# EDA Phase 3: Target Analysis Report
 
 **Generated:** 2026-01-07
-**Data:** /sata_disk/users/erfan/ml_kaggle/raw/train.csv
+**Data:** /home/centcom/data/ml_kaggle/raw/train.csv
 **Samples:** 3360
 **Targets:** 8 antibiotics
 
@@ -730,7 +730,7 @@ class MultiTaskMLP(nn.Module):
 5. **antibiotic_dendrogram.png** - Hierarchical clustering dendrogram
 6. **resistance_count_distribution.png** - Multi-drug resistance histogram
 
-All figures saved to: `/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase3/`
+All figures saved to: `/home/centcom/data/ml_kaggle/outputs/eda/phase3/`
 
 ---
 
@@ -749,7 +749,7 @@ All figures saved to: `/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase3/`
 """
 
     # Save report
-    report_path = "/sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase3_target_analysis.md"
+    report_path = "/home/centcom/data/ml_kaggle/knowledge/insights/eda_phase3_target_analysis.md"
     with open(report_path, 'w') as f:
         f.write(report)
 
@@ -785,7 +785,7 @@ def main():
     print(" PHASE 3 COMPLETE")
     print("="*70)
     print(f"\nAll outputs saved to: {OUTPUT_DIR}/")
-    print("Report saved to: /sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase3_target_analysis.md")
+    print("Report saved to: /home/centcom/data/ml_kaggle/knowledge/insights/eda_phase3_target_analysis.md")
 
 
 if __name__ == "__main__":

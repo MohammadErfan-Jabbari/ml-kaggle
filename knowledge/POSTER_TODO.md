@@ -44,12 +44,35 @@
 - [x] Added 2 more references (XGBoost, CatBoost) - now 4 total
 - [x] Shortened references to compact format
 
-## Next Session: Visual Polish & Final Touches
-- [ ] Review overall visual balance
-- [ ] Consider poster size: boards are 50×70cm, current is A1 (59.4×84.1cm)
-- [ ] Final readability pass
-- [ ] Spellcheck author names and score numbers
-- [ ] Export with embedded fonts for print
+## Completed (2026-01-21 Session 3 - 50×70cm Version)
+- [x] Created `main_50x70.tex` for 50×70cm poster board size
+- [x] Scaled content to fit (scale=0.72)
+- [x] Header extends edge-to-edge (TikZ overlay)
+- [x] Footer extends edge-to-edge (TikZ overlay, 1.5cm height)
+- [x] All 3 figures scaled down proportionally
+- [x] Table overflow fixed (tabcolsep reduced)
+- [x] Author name updated to Ana-Maria Mirza
+- [x] References section: `\large` font, proper spacing
+- [x] Footer text: `\large` font, centered
+- [x] Fixed orphan lines in right column:
+  - "clinical rules apply." → "resistance rules."
+  - "peaks." → removed "but" for better flow
+  - "Underfitting dominated." → "Models underfit."
+  - "macro-averaged." → "lower the macro-averaged score."
+- [x] Fixed orphan lines in left column:
+  - "that matter." / "features." → "compressing too hard discards the signal."
+- [x] Reduced space above references section (-0.8em)
+- [x] Reduced space between sections (1.0ex)
+- [x] Figure 2 caption spacing tightened (0.2em)
+
+## READY FOR PRINT
+- **File**: `poster/main_50x70.pdf`
+- **Size**: 50cm × 70cm (matches poster board)
+- **Build**: `cd poster && pdflatex main_50x70.tex`
+
+## If Changes Needed
+- [ ] Any final text corrections
+- [ ] Verify embedded fonts for print shop
 
 ## Skipped (low value or redundant)
 - AUC definition (too generic)

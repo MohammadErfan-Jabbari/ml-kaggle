@@ -56,16 +56,19 @@
 % ============================================================
 % HEADER
 % ============================================================
+\noindent\makebox[0pt][l]{%
 \begin{beamercolorbox}[wd=\paperwidth,ht=7cm,dp=0.8cm,leftskip=2cm,rightskip=2cm]{headline}
   \vspace{0.8cm}
   {\fontsize{58}{66}\selectfont\bfseries AMR Prediction: Lessons from Distribution Shift\par}
   \vspace{0.4cm}
-  {\usebeamerfont{headline author} MohammadErfan Jabbari$^{1,2}$ \quad \& \quad Ana Mirza$^{1}$\par}
+  {\usebeamerfont{headline author} MohammadErfan Jabbari$^{1,2}$ \quad \& \quad Ana-Maria Mirza$^{1}$\par}
   \vspace{0.2cm}
   {\large $^{1}$Universidad Carlos III de Madrid \enspace $\cdot$ \enspace $^{2}$IMDEA Networks Institute\par}
 \end{beamercolorbox}
+}%
 % Header accent line using TikZ for full width
 \begin{tikzpicture}[remember picture,overlay]
+  \path[use as bounding box] (0,0) rectangle (0,0);
   \fill[Accent] ([yshift=-8.0cm]current page.north west) rectangle ([yshift=-8.3cm]current page.north east);
 \end{tikzpicture}
 
@@ -120,7 +123,7 @@ The training set is dominated by \textit{P.~aeruginosa} (43\%), but this species
 
 \vspace{0.6em}
 \textbf{2. Extreme Feature Sparsity}\\[0.3em]
-93\% of the MALDI-TOF feature matrix is zeros. The signal lives in sparse intensity peaks, not dense patterns. This favors tree-based models (LightGBM) over neural networks, and makes aggressive dimensionality reduction dangerous: compress too hard and you discard the few features that matter.
+93\% of the MALDI-TOF feature matrix is zeros. The signal lives in sparse intensity peaks, not dense patterns. This favors tree-based models (LightGBM) over neural networks, and makes aggressive dimensionality reduction dangerous: compressing too hard discards the signal.
 
 \vspace{0.8em}
 \textbf{3. Non-Random Missing Labels}\\[0.3em]
@@ -239,11 +242,11 @@ $\displaystyle \hat{y}_{\text{blend}} = \frac{1}{M}\sum_{m=1}^{M} \frac{\text{ra
 
 \vspace{0.6em}
 \textbf{2. Species-Aware Weighting}\\[0.3em]
-Knowing that \textit{K.~pneumoniae} dominates the test set (51\%) and \textit{P.~aeruginosa} nearly vanishes (3\%), we up-weighted K.~pneumoniae predictions by 3$\times$ and down-weighted P.~aeruginosa to 0.1$\times$. Simple rebalancing that matches the deployment distribution.
+Knowing that \textit{K.~pneumoniae} dominates the test set (51\%) and \textit{P.~aeruginosa} nearly vanishes (3\%), we up-weighted K.~pneumoniae predictions by 3$\times$ and down-weighted P.~aeruginosa to 0.05$\times$. Simple rebalancing that matches the deployment distribution.
 
 \vspace{0.6em}
 \textbf{3. Intrinsic Resistance Rules}\\[0.3em]
-Certain species are intrinsically resistant to certain antibiotics. This biological prior gives us 18.8\% of predictions for free with 100\% confidence. We override model outputs with hard-coded resistance where clinical rules apply.
+Certain species are intrinsically resistant to certain antibiotics. This biological prior gives us 18.8\% of predictions for free with 100\% confidence. We override model outputs with hard-coded resistance rules.
 
 \vspace{0.8em}
 \begin{center}
@@ -274,11 +277,11 @@ Certain species are intrinsically resistant to certain antibiotics. This biologi
 
 \vspace{0.3em}
 \begin{center}
-{\normalsize\textbf{Figure 3:} Final pipeline. Training: 5-fold stratified CV, LightGBM (lr=0.03, 300 trees, 31 leaves), PLS 100 components.}
+{\normalsize\textbf{Figure 3:} Final pipeline. Training: 5-fold stratified CV, LightGBM (lr=0.02, 350 trees, 127 leaves), PLS 100 components.}
 \end{center}
 
 \vspace{0.5em}
-\textbf{Why PLS?} Partial Least Squares projects features using target labels, preserving signal that correlates with resistance. Unsupervised methods (PCA, NMF) optimize variance, discarding predictive but low-variance peaks.
+\textbf{Why PLS?} Partial Least Squares projects features using target labels, preserving signal that correlates with resistance. Unsupervised methods (PCA, NMF) optimize variance, discarding predictive low-variance peaks.
 \end{block}
 
 \begin{block}{5. What Failed \& Why}
@@ -290,7 +293,7 @@ The meta-learner memorized validation patterns that did not generalize. High OOF
 
 \vspace{0.5em}
 \textbf{Species-Specific Models} (32 separate models)\\[0.2em]
-Splitting by species left too few samples per model. \textit{P.~aeruginosa} had 4,100 training rows but represents only 3\% of test. Underfitting dominated.
+Splitting by species left too few samples per model. \textit{P.~aeruginosa} had 4,100 training rows but represents only 3\% of test. Models underfit.
 
 \vspace{0.5em}
 \textbf{Aggressive Dimensionality Reduction}\\[0.2em]
@@ -298,7 +301,7 @@ KPCA and NMF compressed too hard, discarding sparse intensity peaks that carried
 
 \vspace{0.5em}
 \textbf{K.~pneumoniae-Only Optimization}\\[0.2em]
-We tried tuning exclusively for K.~pneumoniae (51\% of test). This hurt E.~coli and P.~mirabilis enough to lower overall score. The metric is macro-averaged.
+We tried tuning exclusively for K.~pneumoniae (51\% of test). This hurt E.~coli and P.~mirabilis enough to lower the macro-averaged score.
 
 \vspace{0.8em}
 \begin{center}
@@ -331,13 +334,15 @@ We tried tuning exclusively for K.~pneumoniae (51\% of test). This hurt E.~coli 
 % FOOTER (using TikZ for precise positioning)
 % ============================================================
 \begin{tikzpicture}[remember picture,overlay]
+  \path[use as bounding box] (0,0) rectangle (0,0);
   % Dark blue footer bar (taller: 2.5cm)
   \fill[DarkBlue] (current page.south west) rectangle ([yshift=2.5cm]current page.south east);
   % Red accent line on top of footer
   \fill[Accent] ([yshift=2.5cm]current page.south west) rectangle ([yshift=2.8cm]current page.south east);
   % Footer text
-  \node[anchor=center, text=white, font=\large] at ([yshift=1.25cm]current page.south) {UC3M Machine Learning \enspace $\cdot$ \enspace January 2026 \enspace $\cdot$ \enspace Kaggle AMR Prediction Challenge};
+  \node[anchor=center, text=white, font=\large, align=center] at ([yshift=1.25cm]current page.south) {UC3M Machine Learning \enspace $\cdot$ \enspace January 2026\\Kaggle AMR Prediction Challenge};
 \end{tikzpicture}
 
+\vspace{0pt}
 \end{frame}
 \end{document}

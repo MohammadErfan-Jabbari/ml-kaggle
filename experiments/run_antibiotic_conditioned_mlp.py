@@ -36,7 +36,7 @@ from torch.utils.data import DataLoader, Dataset
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "raw"
-OUTPUT_BASE = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
+OUTPUT_BASE = Path("/home/centcom/data/ml_kaggle/outputs")
 
 # Constants
 ANTIBIOTICS = [

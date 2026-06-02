@@ -32,8 +32,8 @@ plt.rcParams['axes.titlesize'] = 12
 plt.rcParams['legend.fontsize'] = 9
 
 # Paths
-DATA_DIR = Path("/sata_disk/users/erfan/ml_kaggle/raw")
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase2")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs/eda/phase2")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def load_data():
@@ -482,7 +482,7 @@ def generate_report(stats, zero_fraction, variances, constant_features,
     print("GENERATING REPORT")
     print("="*60)
 
-    report_path = Path("/sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase2_feature_analysis.md")
+    report_path = Path("/home/centcom/data/ml_kaggle/knowledge/insights/eda_phase2_feature_analysis.md")
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     report = f"""# Phase 2 EDA: Feature Space Analysis
@@ -693,7 +693,7 @@ Species is a major source of spectral variation. This explains the strong predic
 
 ## Files Generated
 
-All figures saved to: `/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase2/`
+All figures saved to: `/home/centcom/data/ml_kaggle/outputs/eda/phase2/`
 
 - `value_distribution.png` - Global value distributions
 - `sparsity_by_feature.png` - Sparsity across 6000 features

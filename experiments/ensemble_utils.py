@@ -33,7 +33,7 @@ from controlled_experiment import (
 )
 
 # Constants
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs/experiments")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs/experiments")
 PREDICTIONS_DIR = OUTPUT_DIR / "predictions"
 PREDICTIONS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -492,7 +492,7 @@ def create_submission(
     print(f"Submission saved: {output_path}")
 
     # Validate format
-    sample_sub_path = Path("/home/erfan/data/ml_kaggle/raw/sample_submission.csv")
+    sample_sub_path = Path("/home/centcom/data/ml_kaggle/raw/sample_submission.csv")
     if sample_sub_path.exists():
         sample_sub = pd.read_csv(sample_sub_path)
 

@@ -46,8 +46,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from data.dataset import ANTIBIOTICS
 
 # Constants
-DATA_DIR = Path("/home/erfan/data/ml_kaggle/raw")
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs/experiments")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs/experiments")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 PREDICTIONS_DIR = OUTPUT_DIR / "predictions"
 PREDICTIONS_DIR.mkdir(parents=True, exist_ok=True)

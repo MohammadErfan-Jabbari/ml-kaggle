@@ -8,7 +8,7 @@ from typing import Any, Dict, Optional
 
 
 # Paths
-TRACKER_DIR = Path("/sata_disk/users/erfan/ml_kaggle/knowledge/submissions")
+TRACKER_DIR = Path("/home/centcom/data/ml_kaggle/knowledge/submissions")
 TRACKER_CSV = TRACKER_DIR / "submissions_tracker.csv"
 TRACKER_LOG = TRACKER_DIR / "submissions_log.md"
 

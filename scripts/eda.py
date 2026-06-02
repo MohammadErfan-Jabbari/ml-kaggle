@@ -11,8 +11,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Setup paths
-DATA_DIR = Path('/sata_disk/users/erfan/ml_kaggle/raw')
-OUTPUT_DIR = Path('/sata_disk/users/erfan/ml_kaggle/outputs/eda')
+DATA_DIR = Path('/home/centcom/data/ml_kaggle/raw')
+OUTPUT_DIR = Path('/home/centcom/data/ml_kaggle/outputs/eda')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Target antibiotics

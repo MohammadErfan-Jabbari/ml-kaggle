@@ -65,7 +65,7 @@ def apply_intrinsic_resistance_rules(predictions: np.ndarray, species_ids: np.nd
 
 
 def predict_lightgbm_baseline(
-    data_dir: str = "/home/erfan/data/ml_kaggle/raw",
+    data_dir: str = "/home/centcom/data/ml_kaggle/raw",
     model_dir: str = "outputs/models",
     output_dir: str = "outputs/submissions",
     model_type: str = "lgb",

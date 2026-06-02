@@ -95,8 +95,8 @@ from data.dataset import (
 # CONSTANTS
 # =============================================================================
 
-DATA_DIR = Path("/home/erfan/data/ml_kaggle/raw")
-BASE_OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+BASE_OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs")
 
 SPECIES_NAMES = {0: "E.coli", 1: "K.pneumoniae", 2: "P.mirabilis", 3: "P.aeruginosa"}
 

@@ -378,7 +378,7 @@ def main():
     # Load data (needed for evaluation and submission)
     print("\n[Loading data...]")
     X_train, X_test, y_train, species_train, species_test = load_data()
-    test_df = pd.read_csv("/home/erfan/data/ml_kaggle/raw/test.csv")
+    test_df = pd.read_csv("/home/centcom/data/ml_kaggle/raw/test.csv")
     sample_ids = test_df["sample_id"].values
 
     print(f"  Train: {X_train.shape}, Test: {X_test.shape}")
@@ -437,7 +437,7 @@ def main():
     print("STEP 5: GENERATE SUBMISSIONS")
     print("=" * 80)
 
-    submission_dir = Path("/sata_disk/users/erfan/ml_kaggle/outputs/submissions")
+    submission_dir = Path("/home/centcom/data/ml_kaggle/outputs/submissions")
     submission_dir.mkdir(parents=True, exist_ok=True)
 
     for exp_id, result in all_results.items():

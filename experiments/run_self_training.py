@@ -55,8 +55,8 @@ console = Console()
 class SelfTrainingConfig:
     """Configuration for self-training pipeline."""
     # Data paths
-    data_dir: Path = Path("/home/erfan/data/ml_kaggle/raw")
-    output_base: Path = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
+    data_dir: Path = Path("/home/centcom/data/ml_kaggle/raw")
+    output_base: Path = Path("/home/centcom/data/ml_kaggle/outputs")
 
     # Validation split
     val_fraction: float = 0.2  # 20% of fully-labeled for validation

@@ -9,7 +9,11 @@
 
 ## Current Poster Structure (as of 2026-01-21)
 
-**Layout**: 2-column beamerposter, A1 portrait, 6 numbered sections
+**Two versions exist:**
+1. **A1 version**: `poster/main.tex` (59.4×84.1cm) - original
+2. **50×70cm version**: `poster/main_50x70.tex` - **FINAL FOR PRINT**
+
+**Layout**: 2-column beamerposter, 6 numbered sections
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -45,7 +49,21 @@
 
 ## Technical Parameters
 
-### Current Settings (as of 2026-01-21 Session 2)
+### 50×70cm Version Settings (FINAL - as of 2026-01-21 Session 3)
+- **Size**: `width=50, height=70` (custom size in beamerposter)
+- **Scale**: 0.72
+- **Title font**: `\fontsize{44}{52}` (scaled down from A1)
+- **Header**: TikZ overlay, 5.5cm height, accent line at -5.7cm
+- **Footer**: TikZ overlay, 1.5cm height, accent line 0.15cm thick
+- **Footer text**: `\large` font
+- **Section headers**: `\LARGE`, bold, sans-serif family
+- **Body text**: `\large`
+- **Block spacing**: `\vskip1.0ex` between blocks
+- **References header**: `\large` bold, red accent line 1.5pt
+- **References content**: `\large` font
+- **Captions**: `\normalsize` with "Figure X:" / "Table X:" labels, centered
+
+### A1 Version Settings (original)
 - **Scale**: 1.15
 - **Title font**: `\fontsize{58}{66}` (fixed, doesn't scale with beamerposter)
 - **Header height**: 7cm, accent line at -8.0cm
@@ -94,6 +112,16 @@
 
 ## Build Commands
 
+### 50×70cm Version (FINAL FOR PRINT)
+```bash
+cd poster
+pdflatex main_50x70.tex
+# Optional: generate PNG preview
+pdftoppm -png -r 150 main_50x70.pdf main_50x70 && mv main_50x70-1.png main_50x70.png
+# Outputs: main_50x70.pdf, main_50x70.png
+```
+
+### A1 Version (original)
 ```bash
 cd poster
 pdflatex -interaction=nonstopmode main.tex
@@ -105,12 +133,12 @@ pdftoppm -png -r 150 -singlefile main.pdf main
 
 ## Next Session Priority
 
-**Font scaling**: Change `scale=1.12` to `scale=1.2` (or 1.25) in:
-```latex
-\usepackage[size=a1,orientation=portrait,scale=1.2]{beamerposter}
-```
+**50×70cm version is READY FOR PRINT** - `poster/main_50x70.pdf`
 
-This single change will proportionally increase ALL font sizes across the poster.
+If any changes needed:
+- Minor text edits can be made directly
+- Orphan lines have been fixed in this session
+- Footer/header are TikZ overlays positioned at page edges
 
 ---
 
@@ -139,3 +167,4 @@ This single change will proportionally increase ALL font sizes across the poster
 
 - `knowledge/sessions/2026-01-20_poster.md` (initial scaffold)
 - `knowledge/sessions/2026-01-21_poster.md` (content completion, styling, captions, section numbering)
+- `knowledge/sessions/2026-01-21_poster_50x70.md` (50×70cm version created, finalized for print)

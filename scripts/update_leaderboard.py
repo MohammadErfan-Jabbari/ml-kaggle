@@ -17,7 +17,7 @@ import argparse
 import sys
 
 # Add src to path
-sys.path.insert(0, "/sata_disk/users/erfan/ml_kaggle")
+sys.path.insert(0, "/home/centcom/data/ml_kaggle")
 
 from src.utils.submission_tracker import (
     update_leaderboard_score,

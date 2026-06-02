@@ -31,8 +31,8 @@ RANDOM_SEED = 42
 
 def load_data():
     """Load and prepare data."""
-    train = pd.read_csv('/sata_disk/users/erfan/ml_kaggle/raw/train.csv')
-    test = pd.read_csv('/sata_disk/users/erfan/ml_kaggle/raw/test.csv')
+    train = pd.read_csv('/home/centcom/data/ml_kaggle/raw/train.csv')
+    test = pd.read_csv('/home/centcom/data/ml_kaggle/raw/test.csv')
 
     # Features are maldi_feature_0 through maldi_feature_5999
     feature_cols = [c for c in train.columns if c.startswith('maldi_feature_')]
@@ -598,7 +598,7 @@ def evaluate(oof, y_true, species, method_name):
 
 def save_submission(test_preds, species_test, suffix):
     """Save submission file."""
-    test = pd.read_csv('/sata_disk/users/erfan/ml_kaggle/raw/test.csv')
+    test = pd.read_csv('/home/centcom/data/ml_kaggle/raw/test.csv')
 
     submission = pd.DataFrame({
         'sample_id': test['sample_id']
@@ -608,7 +608,7 @@ def save_submission(test_preds, species_test, suffix):
         submission[ab] = test_preds[:, i]
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M")
-    filename = f"/sata_disk/users/erfan/ml_kaggle/outputs/submissions/sub_r3_{suffix}_{timestamp}.csv"
+    filename = f"/home/centcom/data/ml_kaggle/outputs/submissions/sub_r3_{suffix}_{timestamp}.csv"
     submission.to_csv(filename, index=False)
     print(f"\nSubmission saved: {filename}")
     return filename
@@ -698,7 +698,7 @@ def run_round3():
         print(f"Best submission: {filename}")
 
     # Save results
-    results_file = f"/sata_disk/users/erfan/ml_kaggle/outputs/experiments/round3_results_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
+    results_file = f"/home/centcom/data/ml_kaggle/outputs/experiments/round3_results_{datetime.now().strftime('%Y%m%d_%H%M')}.json"
     save_results = [{k: v for k, v in r.items() if k != 'test_preds'} for r in all_results]
     for r in save_results:
         r['per_antibiotic'] = {k: float(v) for k, v in r['per_antibiotic'].items()}

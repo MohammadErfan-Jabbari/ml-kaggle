@@ -33,6 +33,12 @@ data/
 *.swp
 *.swo
 
+# Claude Code (keep shared settings.json, ignore personal/local state)
+.claude/settings.local.json
+.claude/projects/
+.claude/shell-snapshots/
+.claude/todos/
+
 # OS
 .DS_Store
 Thumbs.db

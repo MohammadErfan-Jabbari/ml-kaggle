@@ -35,8 +35,8 @@ plt.rcParams['figure.figsize'] = (14, 10)
 plt.rcParams['font.size'] = 10
 
 # Paths
-RAW_DIR = '/sata_disk/users/erfan/ml_kaggle/raw'
-OUTPUT_DIR = '/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase8'
+RAW_DIR = '/home/centcom/data/ml_kaggle/raw'
+OUTPUT_DIR = '/home/centcom/data/ml_kaggle/outputs/eda/phase8'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Species mapping
@@ -698,12 +698,12 @@ print(f"\nAll outputs saved to: {OUTPUT_DIR}")
 print("\nGenerating comprehensive report...")
 
 # Generate markdown report
-report_path = '/sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase8_biological_analysis.md'
+report_path = '/home/centcom/data/ml_kaggle/knowledge/insights/eda_phase8_biological_analysis.md'
 with open(report_path, 'w') as f:
     f.write("""# EDA Phase 8: Biological/Domain-Specific Analysis Report
 
 **Generated:** 2026-01-07
-**Data:** /sata_disk/users/erfan/ml_kaggle/raw/train.csv
+**Data:** /home/centcom/data/ml_kaggle/raw/train.csv
 **Samples:** 3360
 **Focus:** Antibiotic classes, intrinsic resistance, species-specific mechanisms
 
@@ -946,7 +946,7 @@ This biological analysis reveals significant opportunities for model simplificat
 
 ## Generated Files
 
-All figures saved to: `/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase8/`
+All figures saved to: `/home/centcom/data/ml_kaggle/outputs/eda/phase8/`
 
 1. `antibiotic_correlation_by_class.png` - Correlation matrix with class groupings
 2. `mdr_analysis.png` - MDR prevalence and spectra profiles

@@ -40,8 +40,8 @@ plt.rcParams['axes.titlesize'] = 12
 plt.rcParams['legend.fontsize'] = 9
 
 # Paths
-DATA_DIR = Path("/sata_disk/users/erfan/ml_kaggle/raw")
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase7")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs/eda/phase7")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Antibiotic targets
@@ -781,7 +781,7 @@ def create_summary_report(f_stats, mi_scores, rankings, corr_matrix,
     print("GENERATING SUMMARY REPORT")
     print("="*70)
 
-    report_path = Path("/sata_disk/users/erfan/ml_kaggle/knowledge/insights/eda_phase7_feature_target.md")
+    report_path = Path("/home/centcom/data/ml_kaggle/knowledge/insights/eda_phase7_feature_target.md")
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(report_path, 'w') as f:

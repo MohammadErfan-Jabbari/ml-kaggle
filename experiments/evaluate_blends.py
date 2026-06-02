@@ -17,8 +17,8 @@ from rich import box
 
 console = Console()
 
-OUTPUT_BASE = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
-DATA_DIR = Path("/home/erfan/data/ml_kaggle/raw")
+OUTPUT_BASE = Path("/home/centcom/data/ml_kaggle/outputs")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
 
 ANTIBIOTICS = [
     "Ampicillin", "Amoxicillin_Clavulanic_acid", "Cefotaxime", "Cefuroxime",

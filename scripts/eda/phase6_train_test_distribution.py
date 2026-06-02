@@ -34,7 +34,7 @@ from tqdm import tqdm
 warnings.filterwarnings('ignore')
 
 # Set paths
-PROJECT_ROOT = Path('/sata_disk/users/erfan/ml_kaggle')
+PROJECT_ROOT = Path('/home/centcom/data/ml_kaggle')
 RAW_DIR = PROJECT_ROOT / 'raw'
 OUTPUT_DIR = PROJECT_ROOT / 'outputs' / 'eda' / 'phase6'
 KNOWLEDGE_DIR = PROJECT_ROOT / 'knowledge' / 'insights'
@@ -805,7 +805,7 @@ The train-test distribution shift in this competition is **significant and multi
 ---
 
 *Analysis performed using Phase 6 EDA script*
-*All figures saved to `/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase6/`*
+*All figures saved to `/home/centcom/data/ml_kaggle/outputs/eda/phase6/`*
 """
 
 # Write report

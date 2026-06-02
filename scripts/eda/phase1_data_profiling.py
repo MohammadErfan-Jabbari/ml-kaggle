@@ -19,7 +19,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Set paths
-PROJECT_ROOT = Path('/sata_disk/users/erfan/ml_kaggle')
+PROJECT_ROOT = Path('/home/centcom/data/ml_kaggle')
 RAW_DIR = PROJECT_ROOT / 'raw'
 OUTPUT_DIR = PROJECT_ROOT / 'outputs' / 'eda' / 'phase1'
 

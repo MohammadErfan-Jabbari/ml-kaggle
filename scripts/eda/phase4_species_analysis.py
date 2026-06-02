@@ -34,8 +34,8 @@ plt.rcParams['figure.figsize'] = (12, 8)
 plt.rcParams['font.size'] = 10
 
 # Paths
-RAW_DIR = '/sata_disk/users/erfan/ml_kaggle/raw'
-OUTPUT_DIR = '/sata_disk/users/erfan/ml_kaggle/outputs/eda/phase4'
+RAW_DIR = '/home/centcom/data/ml_kaggle/raw'
+OUTPUT_DIR = '/home/centcom/data/ml_kaggle/outputs/eda/phase4'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Species mapping

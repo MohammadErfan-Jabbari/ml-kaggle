@@ -34,8 +34,8 @@ console = Console()
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from data.dataset import ANTIBIOTICS, load_validation_split, load_train_data, split_features_targets
 
-DATA_DIR = Path("/home/erfan/data/ml_kaggle/raw")
-OUTPUT_DIR = Path("/sata_disk/users/erfan/ml_kaggle/outputs")
+DATA_DIR = Path("/home/centcom/data/ml_kaggle/raw")
+OUTPUT_DIR = Path("/home/centcom/data/ml_kaggle/outputs")
 
 ANTIBIOTIC_SHORT = {
     "Ampicillin": "AMP", "Amoxicillin_Clavulanic_acid": "AMC",

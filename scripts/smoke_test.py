@@ -19,7 +19,7 @@ import pandas as pd
 
 def main() -> int:
     """Run smoke tests on train/test data."""
-    data_dir = Path("/home/erfan/data/ml_kaggle/raw")
+    data_dir = Path("/home/centcom/data/ml_kaggle/raw")
     train_path = data_dir / "train.csv"
     test_path = data_dir / "test.csv"
 

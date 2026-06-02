@@ -208,7 +208,7 @@ def create_submission(test_predictions: np.ndarray, output_path: Path):
 
     # Load test data for sample IDs
     _, X_test, _, _, _ = load_data()
-    test_df = pd.read_csv(Path("/home/erfan/data/ml_kaggle/raw/test.csv"))
+    test_df = pd.read_csv(Path("/home/centcom/data/ml_kaggle/raw/test.csv"))
 
     # Create submission DataFrame
     submission = pd.DataFrame({
@@ -224,7 +224,7 @@ def create_submission(test_predictions: np.ndarray, output_path: Path):
     print(f"\n✓ Submission saved: {output_path}")
 
     # Validate format
-    sample_sub_path = Path("/home/erfan/data/ml_kaggle/raw/sample_submission.csv")
+    sample_sub_path = Path("/home/centcom/data/ml_kaggle/raw/sample_submission.csv")
     if sample_sub_path.exists():
         sample_sub = pd.read_csv(sample_sub_path)
 
@@ -296,7 +296,7 @@ def main():
     print("=" * 80)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M")
-    submission_path = OUTPUT_PATH = Path("/sata_disk/users/erfan/ml_kaggle/outputs/submissions")
+    submission_path = OUTPUT_PATH = Path("/home/centcom/data/ml_kaggle/outputs/submissions")
     submission_path = submission_path / f"sub_phase5.5b_{BEST_METHOD}_{timestamp}.csv"
 
     submission = create_submission(test_predictions, submission_path)
